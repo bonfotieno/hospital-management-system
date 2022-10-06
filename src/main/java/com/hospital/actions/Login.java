@@ -1,4 +1,4 @@
-package hospital.sys;
+package com.hospital.actions;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -11,13 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 
-public class Login extends HttpServlet {
-    ServletConfig config = null;
-
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        this.config = config;
-    }
+public class Login extends Header {
 
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         res.getWriter().print(this.login(null));
@@ -40,12 +34,13 @@ public class Login extends HttpServlet {
             return;
         }
 
-        if (!email.equals(config.getInitParameter("username")) && !password.equals(config.getInitParameter("password"))) {
+        if (!email.equals(getServletConfig().getInitParameter("username")) && !password.equals(getServletConfig().getInitParameter("password"))) {
             wr.print(this.login("Invalid username & password combination<br/>"));
             return;
         }
 
         HttpSession session = req.getSession(true);
+        System.out.println("Running");
         session.setAttribute("loggedInTime", "Logged In Time:" + new Date());
         RequestDispatcher dispatcher = req.getRequestDispatcher("./home");
         dispatcher.forward(req, resp);
@@ -53,13 +48,13 @@ public class Login extends HttpServlet {
     }
 
     public String login(String actionError) {
-        return Header.header(false) + "<div class=\"row \">"
+        return header(false) + "<div class=\"row \">"
                 + "<div class=\"col-md-12\">"
                 + "<br /><br /><br /><br /><br /><br /><br /><br />"
                 + "<div class=\"panel panel-default login\">"
                 + "<div class=\"panel-heading logintitle\">Login</div>"
                 + "<div class=\"panel-body\">"
-                + "<form class=\"form-horizontal center-block\" role=\"form\" action=\"./home\" method=\"post\">"
+                + "<form class=\"form-horizontal center-block\" role=\"form\" action=\"./login\" method=\"post\">"
                 + "<input type=\"hidden\" name=\"action\" value=\"login\">"
                 + "<div class=\"input-group input-group-lg\">"
                 + "<span class=\"input-group-addon\" id=\"sizing-addon1\"><span class=\"glyphicon glyphicon-user\" aria-hidden=\"true\"></span></span>"

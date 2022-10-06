@@ -1,7 +1,12 @@
-package hospital.sys;
+package com.hospital.actions;
 
-public class Header {
-    public static String header(Boolean hasLoginOption){
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+
+public class Header extends HttpServlet {
+
+    public String header(Boolean hasLoginOption){
         return "<!DOCTYPE html>"
                 +"<html lang=\"en\">"
                 +"<head>"
@@ -9,7 +14,7 @@ public class Header {
                 +"<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">"
                 +"<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
                 +"<link href=\"images/logo.png\" rel=\"icon\" />\n"
-                +"<title>Online Hospital Management System</title>"
+                +"<title>"+getServletConfig().getServletContext().getAttribute("applicationLabel") +"</title>"
                 +"<link href=\"./css/bootstrap.min.css\" rel=\"stylesheet\">"
                 +"<link href=\"./css/style.css\" rel=\"stylesheet\">"
                 +"<script src=\"./js/jquery.js\"></script>"

@@ -4,34 +4,33 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
-  <context-param>
-    <param-name>applicationLabel</param-name>
-    <param-value>Botien | Hospital Management System</param-value>
-  </context-param>
-
   <servlet>
     <servlet-name>Index</servlet-name>
-    <servlet-class>hospital.sys.Index</servlet-class>
+    <servlet-class>com.hospital.actions.Index</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>Home</servlet-name>
-    <servlet-class>hospital.sys.Home</servlet-class>
+    <servlet-class>com.hospital.actions.Home</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>Login</servlet-name>
-    <servlet-class>hospital.sys.Login</servlet-class>
+    <servlet-class>com.hospital.actions.Login</servlet-class>
     <init-param>
       <param-name>username</param-name>
-      <param-value>johannes@graz.com</param-value>
+      <param-value>gfffh@war.bom</param-value>
     </init-param>
     <init-param>
       <param-name>password</param-name>
-      <param-value>Cohort123*</param-value>
+      <param-value>bonny255</param-value>
     </init-param>
   </servlet>
   <servlet>
     <servlet-name>Register</servlet-name>
-    <servlet-class>hospital.sys.Register</servlet-class>
+    <servlet-class>com.hospital.actions.Register</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Logout</servlet-name>
+    <servlet-class>com.hospital.actions.Logout</servlet-class>
   </servlet>
 
   <servlet-mapping>
@@ -50,5 +49,26 @@
     <servlet-name>Register</servlet-name>
     <url-pattern>/register</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Logout</servlet-name>
+    <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+
+  <listener>
+    <listener-class>com.hospital.listeners.AppContextListener</listener-class>
+  </listener>
+
+  <listener>
+    <listener-class>com.hospital.listeners.RequestListener</listener-class>
+  </listener>
+
+  <filter>
+    <filter-name>SessionFilter</filter-name>
+    <filter-class>com.hospital.filters.SessionFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>SessionFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
 
 </web-app>

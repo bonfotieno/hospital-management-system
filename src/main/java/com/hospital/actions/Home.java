@@ -1,4 +1,4 @@
-package hospital.sys;
+package com.hospital.actions;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
 public class Home extends HttpServlet {
 
@@ -76,9 +75,9 @@ public class Home extends HttpServlet {
                 email +"<span class=\"caret\"></span>\n" +
                 "                        </a>\n" +
                 "                        <ul class=\"dropdown-menu \">\n" +
-                "                            <li><a href=\"profile.jsp\">Change Profile</a></li>\n" +
+                "                            <li><a href=\"./profile\">Change Profile</a></li>\n" +
                 "                            <li role=\"separator\" class=\"divider\"></li>\n" +
-                "                            <li><a href=\"logout.jsp\">Logout</a></li>\n" +
+                "                            <li><a href=\"./logout\">Logout</a></li>\n" +
                 "                        </ul>\n" +
                 "                    </li>\n" +
                 "                </ul>\n" +

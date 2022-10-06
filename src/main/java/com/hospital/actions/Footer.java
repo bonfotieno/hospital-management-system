@@ -1,4 +1,4 @@
-package hospital.sys;
+package com.hospital.actions;
 
 public class Footer {
     public static String footer(){

@@ -1,4 +1,4 @@
-package hospital.sys;
+package com.hospital.actions;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -8,11 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class Register extends HttpServlet {
+public class Register extends Header {
     ServletConfig config = null;
 
+    @Override
     public void init(ServletConfig config) throws ServletException {
-        this.config = config;
+        super.init(config);
+        this.config=config;
     }
 
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -68,12 +70,12 @@ public class Register extends HttpServlet {
     }
 
     public String register(String actionError){
-        return Header.header(true)+"<div class=\"row \">"
+        return header(true)+"<div class=\"row \">"
                 +"<div class=\"col-md-12\">"
                 +"<div class=\"panel panel-default login\">"
                 +"<div class=\"panel-heading logintitle\">Register As Patient</div>"
                 +"<div class=\"panel-body\">"
-                +"<form class=\"form-horizontal center-block\" role=\"form\" action=\"./home\" method=\"POST\">"
+                +"<form class=\"form-horizontal center-block\" role=\"form\" action=\"./register\" method=\"POST\">"
                 +"<input type=\"hidden\" name=\"action\" value=\"register\">"
                 +"<div class=\"form-group\">"
                 +"<label class=\"col-sm-2 control-label\">Patient Id:</label>"
