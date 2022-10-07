@@ -24,6 +24,6 @@ public class EditDepartment extends HttpServlet {
                 value.setDeptDesc(deptDesc);
             }
         }
-        resp.sendRedirect("/hospital-management-system/department");
+        resp.sendRedirect("../department");
     }
 }

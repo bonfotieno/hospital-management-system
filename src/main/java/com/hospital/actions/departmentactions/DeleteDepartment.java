@@ -19,8 +19,9 @@ public class DeleteDepartment extends HttpServlet {
             Department value = iterator.next();
             if (value.getDeptName().equals(deptName)) {
                 iterator.remove();
+                break;
             }
         }
-        resp.sendRedirect("/hospital-management-system/department");
+        resp.sendRedirect("../department");
     }
 }

@@ -21,7 +21,7 @@ public class HomeAction extends HttpServlet {
     }
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        user_email = req.getParameter("email");
+        user_email = (String) session.getAttribute("username");
         res.sendRedirect("./department");
     }
     public static String adminDashboardHeader(String email){
