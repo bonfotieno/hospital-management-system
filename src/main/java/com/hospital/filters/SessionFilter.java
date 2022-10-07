@@ -33,7 +33,7 @@ public class SessionFilter implements Filter {
         //with a new session creating in this filter (which mean the session was initially
         // null and was crated in this filter at line 21, the user will be redirected to login page
         if (reqPath.equalsIgnoreCase("/home") && session.isNew() /*checks if
-        // session was created in the filte*/) {
+        // session was created in the filter*/) {
             httpRes.sendRedirect("./login");
             return;
         }
