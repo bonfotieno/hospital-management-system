@@ -1,17 +1,25 @@
 package com.hospital.actions;
 
+import com.hospital.model.Department;
+
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
+import javax.servlet.annotation.WebInitParam;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-public class Login extends Header {
+@WebServlet(urlPatterns = "/login", initParams = {
+        @WebInitParam(name="username", value="gfffh@war.bom"),
+        @WebInitParam(name="password",value="bonny255")
+})
+public class LoginAction extends Header {
 
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         res.getWriter().print(this.login(null));
@@ -40,11 +48,14 @@ public class Login extends Header {
         }
 
         HttpSession session = req.getSession(true);
-        System.out.println("Running");
+        session.setAttribute("username", email);
         session.setAttribute("loggedInTime", "Logged In Time:" + new Date());
+
+        List<Department> students  = new ArrayList<Department>();
+        session.setAttribute("students", students);
+
         RequestDispatcher dispatcher = req.getRequestDispatcher("./home");
         dispatcher.forward(req, resp);
-
     }
 
     public String login(String actionError) {
