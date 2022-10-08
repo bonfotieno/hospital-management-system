@@ -18,10 +18,11 @@ public class EditDepartment extends HttpServlet {
         String deptName = req.getParameter("deptName");
         String deptDesc = req.getParameter("deptDesc");
         for (Iterator<Department> iterator = DepartmentAction.departments.iterator(); iterator.hasNext(); ) {
-            Department value = iterator.next();
-            if (value.getDeptName().equals(prevName)) {
-                value.setDeptName(deptName);
-                value.setDeptDesc(deptDesc);
+            Department department = iterator.next();
+            if (department.getDeptName().equals(prevName)) {
+                department.setDeptName(deptName);
+                department.setDeptDesc(deptDesc);
+                break;
             }
         }
         resp.sendRedirect("../department");

@@ -16,8 +16,8 @@ public class DeleteDepartment extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String deptName = req.getParameter("deptName");
         for (Iterator<Department> iterator = DepartmentAction.departments.iterator(); iterator.hasNext(); ) {
-            Department value = iterator.next();
-            if (value.getDeptName().equals(deptName)) {
+            Department department = iterator.next();
+            if (department.getDeptName().equals(deptName)) {
                 iterator.remove();
                 break;
             }
