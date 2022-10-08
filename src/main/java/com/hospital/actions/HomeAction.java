@@ -21,10 +21,6 @@ public class HomeAction extends HttpServlet {
     }
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        if (session == null || session.getId() == null) {
-            res.sendRedirect("");
-            return;
-        }
         user_email = (String) session.getAttribute("username");
         res.sendRedirect("./department");
     }

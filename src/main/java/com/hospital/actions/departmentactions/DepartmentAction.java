@@ -32,6 +32,10 @@ public class DepartmentAction extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         session = req.getSession();
+        if (session.getAttribute("username") == null) { //checks if the previous session expired
+            resp.sendRedirect("");
+            return;
+        }
         PrintWriter wr = resp.getWriter();
         departments = (List<Department>) session.getAttribute("departments"); // to get the previous department objects
         if (departments == null)
