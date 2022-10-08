@@ -78,7 +78,7 @@ public class DepartmentAction extends HttpServlet {
                 "    <td>" + department.getDeptDesc() + "</td>" +
                 "    <td>" +
                 "        <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\"" +
-                "        data-target=\"#myModal"+department.getDeptName()+"\"><span class=\"glyphicon glyphicon-wrench\"" +
+                "        data-target=\"#myModal"+department.getDeptId()+"\"><span class=\"glyphicon glyphicon-wrench\"" +
                 "        aria-hidden=\"true\"></span></button>" +
                 "        <a href=\"./department/delete?deptId=" + department.getDeptId()+"\" class=\"btn btn-danger\"" +
                 "        onclick=\"return confirmDelete()\"><span class=\"glyphicon glyphicon-trash\"" +
@@ -92,7 +92,7 @@ public class DepartmentAction extends HttpServlet {
         String EditModals = "";
         for (Department department : departments) {
             EditModals+=
-                            "                   <div class=\"modal fade\" id=\"myModal"+department.getDeptName()+"\" tabindex=\"-1\" role=\"dialog\"\n" +
+                            "                   <div class=\"modal fade\" id=\"myModal"+department.getDeptId()+"\" tabindex=\"-1\" role=\"dialog\"\n" +
                             "                            aria-labelledby=\"myModalLabel\">\n" +
                             "                            <div class=\"modal-dialog\" role=\"document\">\n" +
                             "                                <div class=\"modal-content\">\n" +
