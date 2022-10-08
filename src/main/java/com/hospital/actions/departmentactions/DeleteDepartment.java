@@ -14,10 +14,10 @@ import java.util.Iterator;
 public class DeleteDepartment extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String deptName = req.getParameter("deptName");
+        String deptId = req.getParameter("deptId");
         for (Iterator<Department> iterator = DepartmentAction.departments.iterator(); iterator.hasNext(); ) {
             Department department = iterator.next();
-            if (department.getDeptName().equals(deptName)) {
+            if (department.getDeptId()==Integer.parseInt(deptId)) {
                 iterator.remove();
                 break;
             }

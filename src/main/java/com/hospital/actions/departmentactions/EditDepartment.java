@@ -14,12 +14,12 @@ import java.util.Iterator;
 public class EditDepartment extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String prevName = req.getParameter("prevName");
+        String deptId = req.getParameter("deptId");
         String deptName = req.getParameter("deptName");
         String deptDesc = req.getParameter("deptDesc");
         for (Iterator<Department> iterator = DepartmentAction.departments.iterator(); iterator.hasNext(); ) {
             Department department = iterator.next();
-            if (department.getDeptName().equals(prevName)) {
+            if (department.getDeptId()==Integer.parseInt(deptId)) {
                 department.setDeptName(deptName);
                 department.setDeptDesc(deptDesc);
                 break;

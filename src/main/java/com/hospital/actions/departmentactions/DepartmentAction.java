@@ -31,12 +31,15 @@ public class DepartmentAction extends HttpServlet {
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        session = req.getSession();
         PrintWriter wr = resp.getWriter();
-
+        departments = (List<Department>) session.getAttribute("departments"); // to get the previous department objects
+        if (departments == null)
+            departments = new ArrayList<>();
         Department department = new Department();
-
         try {
             BeanUtils.populate(department, req.getParameterMap());
+            department.setDeptId(this.generateID(departments));
         } catch (Exception ex){
             System.out.println(ex.getMessage());
         }
@@ -50,13 +53,8 @@ public class DepartmentAction extends HttpServlet {
             //wr.print(this.addStudent("Reg No is required<br/>"));
             return;
         }
-        session = req.getSession();
-        departments = (List<Department>) session.getAttribute("departments");
-        if (departments == null)
-            departments = new ArrayList<>();
         departments.add(department);
         session.setAttribute("departments", departments);
-
         wr.print(departmentPage());
     }
     private String departmentPage(){
@@ -75,19 +73,18 @@ public class DepartmentAction extends HttpServlet {
         for (Department department : departments)
             departmentTable +=
                 "<tr>" +
-                "    <td>0</td>" +
+                "    <td>" + department.getDeptId() + "</td>" +
                 "    <td>" + department.getDeptName()+"</td>" +
                 "    <td>" + department.getDeptDesc() + "</td>" +
                 "    <td>" +
                 "        <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\"" +
                 "        data-target=\"#myModal"+department.getDeptName()+"\"><span class=\"glyphicon glyphicon-wrench\"" +
                 "        aria-hidden=\"true\"></span></button>" +
-                "        <a href=\"./department/delete?deptName=" + department.getDeptName()+"\" class=\"btn btn-danger\"" +
+                "        <a href=\"./department/delete?deptId=" + department.getDeptId()+"\" class=\"btn btn-danger\"" +
                 "        onclick=\"return confirmDelete()\"><span class=\"glyphicon glyphicon-trash\"" +
                 "        aria-hidden=\"true\"></span></a>" +
                 "    </td>" +
                 "</tr>";
-
         departmentTable += "</table>";
         return departmentTable;
     }
@@ -110,13 +107,13 @@ public class DepartmentAction extends HttpServlet {
                             "                                        <div class=\"panel panel-default\">\n" +
                             "                                            <div class=\"panel-body\">\n" +
                             "                                                <form class=\"form-horizontal\" action=\"./department/edit\" method=\"post\">\n" +
-                            "                                                   <input type=\"hidden\" id=\"custId\" name=\"prevName\" value=\""+department.getDeptName()+"\">"+
+                            "                                                   <input type=\"hidden\" id=\"custId\" name=\"debtId\" value=\""+department.getDeptId()+"\">"+
                             "                                                    <div class=\"form-group\">\n" +
                             "                                                        <label class=\"col-sm-4 control-label\">Department\n" +
                             "                                                            ID</label>\n" +
                             "                                                        <div class=\"col-sm-4\">\n" +
                             "                                                            <input type=\"number\" class=\"form-control\" name=\"deptId\"\n" +
-                            "                                                                value=\"<0>\" readonly=\"readonly\">\n" + //remember to change the zero to ID variable
+                            "                                                                value=\""+department.getDeptId()+"\" readonly=\"readonly\">\n" +
                             "                                                        </div>\n" +
                             "                                                    </div>\n" +
                             "\n" +
@@ -153,6 +150,12 @@ public class DepartmentAction extends HttpServlet {
                             "                        </div>\n";
         }
         return EditModals;
+    }
+    private int generateID(List<Department> departments){
+        if (!departments.isEmpty()) {
+            return departments.get(departments.size()-1).getDeptId()+1;
+        }else
+            return 0;
     }
     public String departmentContent(){
         return "        <div class=\"row\">\n" +
@@ -205,7 +208,7 @@ public class DepartmentAction extends HttpServlet {
                 "                                            <label class=\"col-sm-4 control-label\">Department ID</label>\n" +
                 "                                            <div class=\"col-sm-4\">\n" +
                 "                                                <input type=\"number\" class=\"form-control\" name=\"deptId\"\n" +
-                "                                                    placeholder=\"\"ID Auto Generated\" readonly>\n" +
+                "                                                    placeholder=\""+this.generateID(departments)+"\" readonly>\n" +
                 "                                            </div>\n" +
                 "                                        </div>\n" +
                 "\n" +
