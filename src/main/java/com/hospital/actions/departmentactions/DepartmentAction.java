@@ -20,10 +20,15 @@ import java.util.List;
 @WebServlet("/department")
 public class DepartmentAction extends HttpServlet {
     private HttpSession session;
-    protected static List<Department> departments;
+    private List<Department> departments;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         session = req.getSession();
+        if (session.getAttribute("username") == null) { //checks if the previous session expired
+            session.invalidate();
+            resp.sendRedirect("");
+            return;
+        }
         departments = (List<Department>) session.getAttribute("departments");
         if (departments == null)
             departments = new ArrayList<Department>();
@@ -33,11 +38,12 @@ public class DepartmentAction extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         session = req.getSession();
         if (session.getAttribute("username") == null) { //checks if the previous session expired
+            session.invalidate();
             resp.sendRedirect("");
             return;
         }
         PrintWriter wr = resp.getWriter();
-        departments = (List<Department>) session.getAttribute("departments"); // to get the previous department objects
+        departments = (List<Department>) session.getAttribute("departments"); // to get the previous departments objects
         if (departments == null)
             departments = new ArrayList<>();
         Department department = new Department();

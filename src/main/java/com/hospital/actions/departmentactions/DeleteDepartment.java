@@ -7,15 +7,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
 
 @WebServlet("/department/delete")
 public class DeleteDepartment extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String deptId = req.getParameter("deptId");
-        for (Iterator<Department> iterator = DepartmentAction.departments.iterator(); iterator.hasNext(); ) {
+        HttpSession session = req.getSession();
+        List<Department> departments = (List<Department>) session.getAttribute("departments");
+        for (Iterator<Department> iterator = departments.iterator(); iterator.hasNext(); ) {
             Department department = iterator.next();
             if (department.getDeptId()==Integer.parseInt(deptId)) {
                 iterator.remove();

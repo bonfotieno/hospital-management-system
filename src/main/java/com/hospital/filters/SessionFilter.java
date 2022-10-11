@@ -32,13 +32,12 @@ public class SessionFilter implements Filter {
         //if user is accessing /home - (page accessed only by logged-in users),
         //with a new session creating in this filter (which mean the session was initially
         // null and was crated in this filter at line 21, the user will be redirected to login page
-        if (reqPath.equalsIgnoreCase("/home") && session.isNew() /*checks if
-        // session was created in the filter*/) {
+        if (reqPath.equalsIgnoreCase("/home") && session.isNew() /*checks if session was created in the filter*/) {
             httpRes.sendRedirect("./login");
             return;
         }
 
-        //in case user is accessing login/register/index page, they should not have a session.. invalidate
+        //in case user is accessing login/register/index page, they should not have a session. invalidate
         if (reqPath.equalsIgnoreCase("/login")
                 || reqPath.equalsIgnoreCase("/register")
                 || reqPath.equalsIgnoreCase("/"))
@@ -46,7 +45,6 @@ public class SessionFilter implements Filter {
 
         //proceed to the resource/servlet requested
         chain.doFilter(request, response);
-
     }
 
     @Override
