@@ -1,6 +1,9 @@
 package com.hospital.actions;
 
 import com.hospital.model.Department;
+import com.hospital.model.User;
+import com.hospital.services.MySQLdb;
+import com.hospital.services.SQLdb;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,20 +38,37 @@ public class LoginAction extends Header {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
-        if (userRole.equalsIgnoreCase("Select User")) {
-            wr.print(this.login("You must select a user type<br/>"));
-            return;
+        try {
+            User user = new User();
+
+            user.setUsername(email);
+            user.setPassword(password);
+            user.setUserType(userRole);
+
+            SQLdb<User, Connection> sqLdb = new MySQLdb<>(user, (Connection) req.getServletContext().getAttribute("dbConnection"));
+            ResultSet resultSet = sqLdb.fetchAll();
+            if (userRole.equalsIgnoreCase("Select User")) {
+                wr.print(this.login("You must select a user type<br/>"));
+                return;
+            }
+
+            if (password == null || password.equalsIgnoreCase("")) {
+                wr.print(this.login("Password is required<br/>"));
+                return;
+            }
+            if(resultSet.next()){
+                System.out.println("\n\n");
+                System.out.println(resultSet.getString("username"));
+                System.out.println("\n");
+                if (!email.equals(resultSet.getString("username")) && !password.equals(resultSet.getString("Password"))) {
+                    wr.print(this.login("Invalid username & password combination<br/>"));
+                    return;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
-        if (password == null || password.equalsIgnoreCase("")) {
-            wr.print(this.login("Password is required<br/>"));
-            return;
-        }
-
-        if (!email.equals(getServletConfig().getInitParameter("username")) && !password.equals(getServletConfig().getInitParameter("password"))) {
-            wr.print(this.login("Invalid username & password combination<br/>"));
-            return;
-        }
 
         HttpSession session = req.getSession(true);
         session.setAttribute("username", email);
