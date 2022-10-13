@@ -23,7 +23,7 @@ public class EditDepartment extends HttpServlet {
         List<Department> departments = (List<Department>) session.getAttribute("departments");
         for (Iterator<Department> iterator = departments.iterator(); iterator.hasNext(); ) {
             Department department = iterator.next();
-            if (department.getDeptId()==Integer.parseInt(deptId)) {
+            if (department.getId()==Integer.parseInt(deptId)) {
                 department.setDeptName(deptName);
                 department.setDeptDesc(deptDesc);
                 break;

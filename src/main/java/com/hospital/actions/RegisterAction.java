@@ -1,21 +1,29 @@
 package com.hospital.actions;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.Statement;
 
 @WebServlet("/register")
 public class RegisterAction extends Header {
     ServletConfig config = null;
+    ServletContext servletCtx = null;
+    private PrintWriter wr;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         this.config=config;
+        servletCtx = config.getServletContext();
     }
 
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -24,7 +32,7 @@ public class RegisterAction extends Header {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        PrintWriter wr = resp.getWriter();
+        wr = resp.getWriter();
         String patientName = req.getParameter("patientname");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
@@ -35,21 +43,9 @@ public class RegisterAction extends Header {
         String gender = req.getParameter("gender");
         String age = req.getParameter("age");
         String bloodGroup = req.getParameter("bgroup");
-        String userRole = req.getParameter("userrole");
 
         String actionError = "";
 
-        System.out.println("Patient Name: "+patientName);
-        System.out.println("Email: " + email);
-        System.out.println("Password: " + password);
-        System.out.println("Confirm Password: " + confirmPassword);
-        System.out.println("Address: "+address);
-        System.out.println("Phone Number: "+phoneNumber);
-        System.out.println("Reason of Visit: "+reasonOfVisit);
-        System.out.println("Sex: "+gender);
-        System.out.println("Age: "+age);
-        System.out.println("Blood Group: "+bloodGroup);
-        System.out.println("User Role: "+userRole);
 
         if (email == null || email.equalsIgnoreCase(""))
             actionError = "Email is required<br/>";
@@ -64,7 +60,8 @@ public class RegisterAction extends Header {
             actionError += "Password & confirm password do not match<br/>";
 
         if (actionError.equals("")) {
-            wr.print("<script type=\"text/javascript\">window.alert(\"Patient Registration Done Successfully\");</script>");
+            password = DigestUtils.md5Hex(password); //hash the password before storing in the database
+            insert(patientName, email, password, address, phoneNumber, reasonOfVisit, gender, age, bloodGroup);
             resp.sendRedirect("./login");
         }else
             wr.print(this.register(actionError));
@@ -192,5 +189,17 @@ public class RegisterAction extends Header {
                 +"</div>"
                 +"</div>"
                 +"</div>"+Footer.footer();
+    }
+
+    public void insert(String patientName, String email, String password, String address, String phoneNumber, String reasonOfVisit, String gender, String age, String bloodGroup) {
+        try {
+            Connection connection = (Connection) servletCtx.getAttribute("dbConnection");
+            Statement sqlStmt = connection.createStatement();
+            sqlStmt.executeUpdate("insert into patients(name, email, password, address, phone, reason_of_visit, gender, age, blood_group) " +
+                    "values('" + patientName.trim() + "','" + email + "','" + password + "','" + address +"','" + phoneNumber + "','" + reasonOfVisit +"','" + gender +"','" + Integer.parseInt(age) +"','" + bloodGroup +"')");
+            wr.print("<script type=\"text/javascript\">window.alert(\"Patient Registration Done Successfully\");</script>");
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 }

@@ -2,10 +2,13 @@ package com.hospital.actions.departmentactions;
 
 import com.hospital.actions.HomeAction;
 import com.hospital.model.Department;
+import com.hospital.model.Patient;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 
 
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,6 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +28,11 @@ import java.util.List;
 public class DepartmentAction extends HttpServlet {
     private HttpSession session;
     private List<Department> departments;
+    ServletContext servletCtx = null;
+    public void init(ServletConfig config) throws ServletException{
+        super.init(config);
+        servletCtx = config.getServletContext();
+    }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         session = req.getSession();
@@ -29,11 +41,9 @@ public class DepartmentAction extends HttpServlet {
             resp.sendRedirect("");
             return;
         }
-        departments = (List<Department>) session.getAttribute("departments");
-        if (departments == null)
-            departments = new ArrayList<Department>();
         resp.getWriter().print(departmentPage());
     }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         session = req.getSession();
@@ -43,13 +53,10 @@ public class DepartmentAction extends HttpServlet {
             return;
         }
         PrintWriter wr = resp.getWriter();
-        departments = (List<Department>) session.getAttribute("departments"); // to get the previous departments objects
-        if (departments == null)
-            departments = new ArrayList<>();
         Department department = new Department();
         try {
             BeanUtils.populate(department, req.getParameterMap());
-            department.setDeptId(this.generateID(departments));
+            department.setId(this.generateID(departments));
         } catch (Exception ex){
             System.out.println(ex.getMessage());
         }
@@ -63,14 +70,48 @@ public class DepartmentAction extends HttpServlet {
             //wr.print(this.addStudent("Reg No is required<br/>"));
             return;
         }
-        departments.add(department);
-        session.setAttribute("departments", departments);
-        wr.print(departmentPage());
+        this.insertDepartment(department);
+        resp.sendRedirect("./department");
+    }
+
+    public void insertDepartment(Department department) {
+        if (department == null || StringUtils.isBlank(department.getDeptName()) || StringUtils.isBlank(department.getDeptDesc()))
+            return;
+
+        try {
+            Connection connection = (Connection) servletCtx.getAttribute("dbConnection");
+            Statement sqlStmt = connection.createStatement();
+            sqlStmt.executeUpdate("insert into departments(name,description) " +
+                    "values('" + department.getDeptName() + "','" + department.getDeptDesc() + "')");
+
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+
+        }
+
     }
     private String departmentPage(){
         return HomeAction.adminDashboardHeader(HomeAction.user_email)+departmentContent()+HomeAction.dashboardFooter();
     }
+
     private String departmentTable(List<Department> departments){
+        try {
+            Connection connection = (Connection) servletCtx.getAttribute("dbConnection");
+            Statement sqlStmt = connection.createStatement();
+
+            ResultSet result = sqlStmt.executeQuery("select * from departments");
+            while (result.next()) {
+                Department department = new Department();
+                department.setDeptName(result.getString("name"));
+                department.setDeptDesc(result.getString("description"));
+
+                departments.add(department);
+            }
+
+        }catch (Exception ex) {
+            System.out.println(ex.getMessage());
+
+        }
         if (departments == null)
             departments = new ArrayList<Department>();
         String departmentTable = "<table class=\"table table-bordered table-hover\">\n" +
@@ -83,14 +124,14 @@ public class DepartmentAction extends HttpServlet {
         for (Department department : departments)
             departmentTable +=
                 "<tr>" +
-                "    <td>" + department.getDeptId() + "</td>" +
+                "    <td>" + department.getId() + "</td>" +
                 "    <td>" + department.getDeptName()+"</td>" +
                 "    <td>" + department.getDeptDesc() + "</td>" +
                 "    <td>" +
                 "        <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\"" +
-                "        data-target=\"#myModal"+department.getDeptId()+"\"><span class=\"glyphicon glyphicon-wrench\"" +
+                "        data-target=\"#myModal"+department.getId()+"\"><span class=\"glyphicon glyphicon-wrench\"" +
                 "        aria-hidden=\"true\"></span></button>" +
-                "        <a href=\"./department/delete?deptId=" + department.getDeptId()+"\" class=\"btn btn-danger\"" +
+                "        <a href=\"./department/delete?deptId=" + department.getId()+"\" class=\"btn btn-danger\"" +
                 "        onclick=\"return confirmDelete()\"><span class=\"glyphicon glyphicon-trash\"" +
                 "        aria-hidden=\"true\"></span></a>" +
                 "    </td>" +
@@ -100,9 +141,11 @@ public class DepartmentAction extends HttpServlet {
     }
     private String createEditModal(List<Department> departments){
         String EditModals = "";
+        if (departments == null)
+            departments = new ArrayList<Department>();
         for (Department department : departments) {
             EditModals+=
-                            "                   <div class=\"modal fade\" id=\"myModal"+department.getDeptId()+"\" tabindex=\"-1\" role=\"dialog\"\n" +
+                            "                   <div class=\"modal fade\" id=\"myModal"+department.getId()+"\" tabindex=\"-1\" role=\"dialog\"\n" +
                             "                            aria-labelledby=\"myModalLabel\">\n" +
                             "                            <div class=\"modal-dialog\" role=\"document\">\n" +
                             "                                <div class=\"modal-content\">\n" +
@@ -117,13 +160,13 @@ public class DepartmentAction extends HttpServlet {
                             "                                        <div class=\"panel panel-default\">\n" +
                             "                                            <div class=\"panel-body\">\n" +
                             "                                                <form class=\"form-horizontal\" action=\"./department/edit\" method=\"post\">\n" +
-                            "                                                   <input type=\"hidden\" id=\"custId\" name=\"debtId\" value=\""+department.getDeptId()+"\">"+
+                            "                                                   <input type=\"hidden\" id=\"custId\" name=\"debtId\" value=\""+department.getId()+"\">"+
                             "                                                    <div class=\"form-group\">\n" +
                             "                                                        <label class=\"col-sm-4 control-label\">Department\n" +
                             "                                                            ID</label>\n" +
                             "                                                        <div class=\"col-sm-4\">\n" +
                             "                                                            <input type=\"number\" class=\"form-control\" name=\"deptId\"\n" +
-                            "                                                                value=\""+department.getDeptId()+"\" readonly=\"readonly\">\n" +
+                            "                                                                value=\""+department.getId()+"\" readonly=\"readonly\">\n" +
                             "                                                        </div>\n" +
                             "                                                    </div>\n" +
                             "\n" +
@@ -161,9 +204,11 @@ public class DepartmentAction extends HttpServlet {
         }
         return EditModals;
     }
-    private int generateID(List<Department> departments){
+    private long generateID(List<Department> departments){
+        if (departments == null)
+            departments = new ArrayList<Department>();
         if (!departments.isEmpty()) {
-            return departments.get(departments.size()-1).getDeptId()+1;
+            return departments.get(departments.size()-1).getId()+1;
         }else
             return 0;
     }
@@ -184,6 +229,7 @@ public class DepartmentAction extends HttpServlet {
                 "                    <li role=\"presentation\"><a href=\"#\">Blood Donor</a></li>\n" +
                 "                    <li role=\"presentation\"><a href=\"#\">Billing</a></li>\n" +
                 "                    <li role=\"presentation\"><a href=\"#\">Search</a></li>\n" +
+                "                    <li role=\"presentation\"><a href=\"#\">Settings</a></li>\n" +
                 "                </ul>\n" +
                 "            </div>\n" +
                 "            <!---- Menu Ares Ends  -------->\n" +

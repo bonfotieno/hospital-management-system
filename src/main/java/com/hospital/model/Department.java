@@ -2,14 +2,9 @@ package com.hospital.model;
 
 import java.io.Serializable;
 
-public class Department implements Serializable {
-    private int deptId;
+public class Department extends BaseEntity {
     private String deptName;
     private String deptDesc;
-
-    public int getDeptId() {
-        return deptId;
-    }
 
     public String getDeptName() {
         return deptName;
@@ -17,10 +12,6 @@ public class Department implements Serializable {
 
     public String getDeptDesc() {
         return deptDesc;
-    }
-
-    public void setDeptId(int deptId) {
-        this.deptId = deptId;
     }
 
     public void setDeptName(String deptName) {

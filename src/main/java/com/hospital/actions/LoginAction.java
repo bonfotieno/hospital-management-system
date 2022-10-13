@@ -1,11 +1,13 @@
 package com.hospital.actions;
 
+import com.hospital.model.Admin;
 import com.hospital.model.Department;
-import com.hospital.model.User;
-import com.hospital.services.MySQLdb;
-import com.hospital.services.SQLdb;
+import com.hospital.model.Patient;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
@@ -16,8 +18,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -26,9 +29,13 @@ import java.util.List;
         @WebInitParam(name="password",value="bonny255")
 })
 public class LoginAction extends Header {
-
+    ServletContext servletCtx = null;
+    public void init(ServletConfig config) throws ServletException{
+        super.init(config);
+        servletCtx = config.getServletContext();
+    }
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        res.getWriter().print(this.login(null));
+        res.getWriter().print(this.loginView(null));
     }
 
     @Override
@@ -38,35 +45,29 @@ public class LoginAction extends Header {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
-        try {
-            User user = new User();
+        password = DigestUtils.md5Hex(password); //convert the password to md5 hash
 
-            user.setUsername(email);
-            user.setPassword(password);
-            user.setUserType(userRole);
+        if (userRole.equalsIgnoreCase("Select User")) {
+            wr.print(this.loginView("You must select a user type<br/>"));
+            return;
+        }
 
-            SQLdb<User, Connection> sqLdb = new MySQLdb<>(user, (Connection) req.getServletContext().getAttribute("dbConnection"));
-            ResultSet resultSet = sqLdb.fetchAll();
-            if (userRole.equalsIgnoreCase("Select User")) {
-                wr.print(this.login("You must select a user type<br/>"));
+        if (password == null || password.equalsIgnoreCase("")) {
+            wr.print(this.loginView("Password is required<br/>"));
+            return;
+        }
+        if (userRole.equals("admin")) {
+            Admin user = this.loginAdmin(email, password);
+            if (user == null || user.getId() == null) {
+                wr.print(this.loginView("Invalid username & password combination<br/>"));
                 return;
             }
-
-            if (password == null || password.equalsIgnoreCase("")) {
-                wr.print(this.login("Password is required<br/>"));
+        }else{
+            Patient user = this.loginPatient(email, password);
+            if (user == null || user.getId() == null) {
+                wr.print(this.loginView("Invalid username & password combination<br/>"));
                 return;
             }
-            if(resultSet.next()){
-                System.out.println("\n\n");
-                System.out.println(resultSet.getString("username"));
-                System.out.println("\n");
-                if (!email.equals(resultSet.getString("username")) && !password.equals(resultSet.getString("Password"))) {
-                    wr.print(this.login("Invalid username & password combination<br/>"));
-                    return;
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
 
 
@@ -81,7 +82,7 @@ public class LoginAction extends Header {
         dispatcher.forward(req, resp);
     }
 
-    public String login(String actionError) {
+    public String loginView(String actionError) {
         return header(false) + "<div class=\"row \">"
                 + "<div class=\"col-md-12\">"
                 + "<br /><br /><br /><br /><br /><br /><br /><br />"
@@ -120,5 +121,58 @@ public class LoginAction extends Header {
                 + "</div>"
                 + "</div>"
                 + "</div>" + Footer.footer();
+    }
+    public Admin loginAdmin(String email, String password) {
+        Admin user = null;
+        try {
+            Connection connection = (Connection) servletCtx.getAttribute("dbConnection");
+            Statement sqlStmt = connection.createStatement();
+
+            ResultSet result = sqlStmt.executeQuery("select * from admins where email='" + email + "' and " +
+                    "password='" + password + "'");
+            while (result.next()) {
+                user = new Admin();
+                user.setId((long) result.getInt("id"));
+                user.setUsername(result.getString("username"));
+                user.setEmail(result.getString("email"));
+                user.setPhone(result.getString("phone"));
+            }
+
+        }catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+        return user;
+    }
+    public Patient loginPatient(String email, String password) {
+
+        Patient user = null;
+
+        try {
+            Connection connection = (Connection) servletCtx.getAttribute("dbConnection");
+            Statement sqlStmt = connection.createStatement();
+
+            ResultSet result = sqlStmt.executeQuery("select * from patients where email='" + email + "' and " +
+                    "password='" + password + "'");
+            while (result.next()) {
+                user = new Patient();
+                user.setId((long) result.getInt("id"));
+                user.setName(result.getString("name"));
+                user.setEmail(result.getString("email"));
+                user.setAddress(result.getString(""));
+                user.setPhone(result.getString("phone"));
+                user.setReasonOfVisit(result.getString("reason_of_visit"));
+                user.setRoomNo(result.getString("room_no"));
+                user.setBedNo(result.getString("bed_no"));
+                user.setGender(result.getString("gender"));
+                user.setAge(Integer.parseInt(result.getString("age")));
+                user.setBloodGroup(result.getString("blood_group"));
+            }
+
+        }catch (Exception ex) {
+            System.out.println("Log In Error: " + ex.getMessage());
+        }
+
+        return user;
+
     }
 }
