@@ -2,7 +2,6 @@ package com.hospital.actions.departmentactions;
 
 import com.hospital.actions.HomeAction;
 import com.hospital.model.Department;
-import com.hospital.model.Patient;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -18,7 +17,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -27,7 +25,7 @@ import java.util.List;
 @WebServlet("/department")
 public class DepartmentAction extends HttpServlet {
     private HttpSession session;
-    private List<Department> departments;
+    private List<Department> departments = new ArrayList<>();
     ServletContext servletCtx = null;
     public void init(ServletConfig config) throws ServletException{
         super.init(config);
@@ -70,11 +68,11 @@ public class DepartmentAction extends HttpServlet {
             //wr.print(this.addStudent("Reg No is required<br/>"));
             return;
         }
-        this.insertDepartment(department);
+        this.addNewDepartment(department);
         resp.sendRedirect("./department");
     }
 
-    public void insertDepartment(Department department) {
+    public void addNewDepartment(Department department) {
         if (department == null || StringUtils.isBlank(department.getDeptName()) || StringUtils.isBlank(department.getDeptDesc()))
             return;
 
@@ -94,14 +92,15 @@ public class DepartmentAction extends HttpServlet {
         return HomeAction.adminDashboardHeader(HomeAction.user_email)+departmentContent()+HomeAction.dashboardFooter();
     }
 
-    private String departmentTable(List<Department> departments){
+    private String createDepartmentTable(){
+        departments.clear();
         try {
             Connection connection = (Connection) servletCtx.getAttribute("dbConnection");
             Statement sqlStmt = connection.createStatement();
-
             ResultSet result = sqlStmt.executeQuery("select * from departments");
             while (result.next()) {
                 Department department = new Department();
+                department.setId((long) result.getInt("id"));
                 department.setDeptName(result.getString("name"));
                 department.setDeptDesc(result.getString("description"));
 
@@ -112,8 +111,6 @@ public class DepartmentAction extends HttpServlet {
             System.out.println(ex.getMessage());
 
         }
-        if (departments == null)
-            departments = new ArrayList<Department>();
         String departmentTable = "<table class=\"table table-bordered table-hover\">\n" +
                 "                   <tr class=\"active\">\n" +
                 "                       <td>Department ID</td>\n" +
@@ -141,8 +138,6 @@ public class DepartmentAction extends HttpServlet {
     }
     private String createEditModal(List<Department> departments){
         String EditModals = "";
-        if (departments == null)
-            departments = new ArrayList<Department>();
         for (Department department : departments) {
             EditModals+=
                             "                   <div class=\"modal fade\" id=\"myModal"+department.getId()+"\" tabindex=\"-1\" role=\"dialog\"\n" +
@@ -205,12 +200,10 @@ public class DepartmentAction extends HttpServlet {
         return EditModals;
     }
     private long generateID(List<Department> departments){
-        if (departments == null)
-            departments = new ArrayList<Department>();
         if (!departments.isEmpty()) {
             return departments.get(departments.size()-1).getId()+1;
         }else
-            return 0;
+            return 1;
     }
     public String departmentContent(){
         return "        <div class=\"row\">\n" +
@@ -247,7 +240,7 @@ public class DepartmentAction extends HttpServlet {
                 "                        <!----------------   Display Department Data List start   --------------->\n" +
                 "\n" +
                 "                        <div id=\"doctorlist\" class=\"switchgroup\">\n" +
-                "                       "+departmentTable(departments)+
+                "                       "+ createDepartmentTable()+
                 "                        </div>\n" +
                 "                        <!----------------   Display Department Data List ends   --------------->\n" +
                 "\n" +

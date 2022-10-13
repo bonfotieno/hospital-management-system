@@ -75,9 +75,6 @@ public class LoginAction extends Header {
         session.setAttribute("username", email);
         session.setAttribute("loggedInTime", "Logged In Time:" + new Date());
 
-        List<Department> departments  = new ArrayList<>();
-        session.setAttribute("departments", departments);
-
         RequestDispatcher dispatcher = req.getRequestDispatcher("./home");
         dispatcher.forward(req, resp);
     }
