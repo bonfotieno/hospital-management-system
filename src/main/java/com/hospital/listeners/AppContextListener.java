@@ -24,6 +24,7 @@ public class AppContextListener implements ServletContextListener {
             dataSource.setUsername("root");
 
             Connection connection = dataSource.getConnection();
+            ctx.setAttribute("dbConnection", connection);
             System.out.print("Connection Established....");
         } catch (Exception ex) {
             System.out.println("Connection Not Established....: " + ex.getMessage());
