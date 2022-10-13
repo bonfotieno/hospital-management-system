@@ -1,5 +1,7 @@
 package com.hospital.listeners;
 
+import com.zaxxer.hikari.HikariDataSource;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -16,12 +18,15 @@ public class AppContextListener implements ServletContextListener {
         ctx.setAttribute("applicationLabel", "Botien | Online Hospital Management System");
         try {
             System.out.print("Establishing connections....");
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital_sys",
-                    "root", "PASSWORD");
-            ctx.setAttribute("dbConnection", connection);
+            HikariDataSource dataSource = new HikariDataSource();
+            dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/CapacityBuilding");
+            dataSource.setPassword("PASSWORD");
+            dataSource.setUsername("root");
+
+            Connection connection = dataSource.getConnection();
             System.out.print("Connection Established....");
         } catch (Exception ex) {
-            System.out.println("Connection Note Established....: " + ex.getMessage());
+            System.out.println("Connection Not Established....: " + ex.getMessage());
         }
     }
 
