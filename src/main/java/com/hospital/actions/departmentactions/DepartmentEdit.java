@@ -13,7 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @WebServlet("/department/edit")
-public class EditDepartment extends HttpServlet {
+public class DepartmentEdit extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String deptId = req.getParameter("deptId");
