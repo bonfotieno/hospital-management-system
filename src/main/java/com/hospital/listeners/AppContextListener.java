@@ -19,9 +19,10 @@ public class AppContextListener implements ServletContextListener {
         try {
             System.out.print("Establishing connections....");
             HikariDataSource dataSource = new HikariDataSource();
-            dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/CapacityBuilding");
+            dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/hospital_sys");
             dataSource.setPassword("PASSWORD");
             dataSource.setUsername("root");
+            dataSource.setMinimumIdle(1);
 
             Connection connection = dataSource.getConnection();
             ctx.setAttribute("dbConnection", connection);
