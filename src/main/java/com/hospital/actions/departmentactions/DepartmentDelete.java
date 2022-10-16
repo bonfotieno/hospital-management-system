@@ -18,7 +18,7 @@ import java.util.List;
 
 @WebServlet("/department/delete")
 public class DepartmentDelete extends HttpServlet {
-    ServletContext servletCtx = null;
+    private ServletContext servletCtx = null;
     public void init(ServletConfig config) throws ServletException{
         super.init(config);
         servletCtx = config.getServletContext();
