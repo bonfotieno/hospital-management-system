@@ -24,18 +24,12 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-@WebServlet(urlPatterns = "/login", initParams = {
-        @WebInitParam(name="username", value="gfffh@war.bom"),
-        @WebInitParam(name="password",value="bonny255")
-})
+@WebServlet(urlPatterns = "/login")
 public class LoginAction extends Header {
     ServletContext servletCtx = null;
     public void init(ServletConfig config) throws ServletException{
         super.init(config);
         servletCtx = config.getServletContext();
-    }
-    public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        res.getWriter().print(this.loginView(null));
     }
 
     @Override
