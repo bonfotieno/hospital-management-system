@@ -9,6 +9,7 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -19,13 +20,12 @@ import java.sql.Statement;
 import java.util.Date;
 
 @WebServlet(urlPatterns = "/login")
-public class LoginAction extends Header {
+public class LoginAction extends HttpServlet {
     ServletContext servletCtx = null;
     public void init(ServletConfig config) throws ServletException{
         super.init(config);
         servletCtx = config.getServletContext();
     }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String userRole = req.getParameter("userrole");
@@ -68,7 +68,6 @@ public class LoginAction extends Header {
         RequestDispatcher dispatcher = req.getRequestDispatcher("./home");
         dispatcher.forward(req, resp);
     }
-
     public Admin loginAdmin(String email, String password) {
         Admin user = null;
         try {

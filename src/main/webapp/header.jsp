@@ -25,7 +25,7 @@
                         </div>
                     </div>
                 </nav>
-                <%= request.getServletPath().equals("/register") ?
+                <%= request.getServletPath().equals("/register.jsp") ?
                 "<a href=\"./login.jsp\" style=\"text-align:Center;font-weight:bold;font-size:110%;padding: 0 2%;color:rgb(253, 250, 250)\">LOGIN</a>" :
                 ""%>
             </div>

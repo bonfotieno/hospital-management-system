@@ -6,6 +6,7 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -14,7 +15,7 @@ import java.sql.Connection;
 import java.sql.Statement;
 
 @WebServlet("/register")
-public class RegisterAction extends Header {
+public class RegisterAction extends HttpServlet {
     ServletConfig config = null;
     ServletContext servletCtx = null;
     private PrintWriter wr;
@@ -25,14 +26,8 @@ public class RegisterAction extends Header {
         this.config=config;
         servletCtx = config.getServletContext();
     }
-
-    public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        res.getWriter().print(this.register(null));
-    }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        wr = resp.getWriter();
         String patientName = req.getParameter("patientname");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
@@ -59,138 +54,14 @@ public class RegisterAction extends Header {
         if (password != null && confirmPassword != null && !password.equals(confirmPassword))
             actionError += "Password & confirm password do not match<br/>";
 
+        servletCtx.setAttribute("registerError" , actionError);
         if (actionError.equals("")) {
             password = DigestUtils.md5Hex(password); //hash the password before storing in the database
             insert(patientName, email, password, address, phoneNumber, reasonOfVisit, gender, age, bloodGroup);
-            resp.sendRedirect("./login");
+            resp.sendRedirect("./login.jsp");
         }else
-            wr.print(this.register(actionError));
+            resp.sendRedirect("./register.jsp");
     }
-
-    public String register(String actionError){
-        return header(true)+"<div class=\"row \">"
-                +"<div class=\"col-md-12\">"
-                +"<div class=\"panel panel-default login\">"
-                +"<div class=\"panel-heading logintitle\">Register As Patient</div>"
-                +"<div class=\"panel-body\">"
-                +"<form class=\"form-horizontal center-block\" role=\"form\" action=\"./register\" method=\"POST\">"
-                +"<input type=\"hidden\" name=\"action\" value=\"register\">"
-                +"<div class=\"form-group\">"
-                +"<label class=\"col-sm-2 control-label\">Patient Id:</label>"
-                +"<div class=\"col-sm-10\">"
-                +"<input type=\"number\" class=\"form-control\" name=\"patientid\" placeholder=\"unique_id auto generated\" readonly>"
-                +"</div>"
-                +"</div>"
-                +"<div class=\"form-group\">"
-                +"<label class=\"col-sm-2 control-label\">Name</label>"
-                +"<div class=\"col-sm-10\">"
-                +"<input type=\"text\" class=\"form-control\" name=\"patientname\" placeholder=\"Name\" required>"
-                +"</div>"
-                +"</div>"
-                +"<div class=\"form-group\">"
-                +"<label class=\"col-sm-2 control-label\">Email</label>"
-                +"<div class=\"col-sm-10\">"
-                +"<input type=\"email\" class=\"form-control\" name=\"email\" placeholder=\"Email\" required>"
-                +"</div>"
-                +"</div>"
-                +"<div class=\"form-group\">"
-                +"<label class=\"col-sm-2 control-label\">Password</label>"
-                +"<div class=\"col-sm-10\">"
-                +"<input type=\"password\" class=\"form-control\" name=\"password\" placeholder=\"Password\" required>"
-                +"</div>"
-                +"</div>"
-                +"<div class=\"form-group\">"
-                +"<label class=\"col-sm-2 control-label\">Confirm Password</label>"
-                +"<div class=\"col-sm-10\">"
-                +"<input type=\"password\" class=\"form-control\" name=\"confirmPassword\" placeholder=\"Password\" required>"
-                +"</div>"
-                +"</div>"
-                +"<div class=\"form-group\">"
-                +"<label class=\"col-sm-2 control-label\">Address</label>"
-                +"<div class=\"col-sm-10\">"
-                +"<input type=\"text\" class=\"form-control\" name=\"add\" placeholder=\"Address\" required>"
-                +"</div>"
-                +"</div>"
-                +"<div class=\"form-group\">"
-                +"<label class=\"col-sm-2 control-label\">Phone</label>"
-                +"<div class=\"col-sm-10\">"
-                +"<input type=\"text\" class=\"form-control\" name=\"phone\" placeholder=\"Phone No.\" required>"
-                +"</div>"
-                +"</div>"
-                +"<div class=\"form-group\">"
-                +"<label class=\"col-sm-2 control-label\">Reason Of Visit</label>"
-                +"<div class=\"col-sm-10\">"
-                +"<input type=\"text\" class=\"form-control\" name=\"rov\" placeholder=\"Reason Of Visit\" required>"
-                +"</div>"
-                +"</div>"
-                +"<div class=\"form-group\">"
-                +"<label class=\"col-sm-2 control-label\">Room No</label>"
-                +"<div class=\"col-sm-10\">"
-                +"<input type=\"text\" class=\"form-control\" value=\"\" name=\"roomNo\" placeholder=\"Left for Admin\" readonly>"
-                +"</div>"
-                +"</div>"
-                +"<div class=\"form-group\">"
-                +"<label class=\"col-sm-2 control-label\">Bed No</label>"
-                +"<div class=\"col-sm-10\">"
-                +"<input type=\"text\" class=\"form-control\" name=\"bedNo\" placeholder=\"Left for Admin\" readonly>"
-                +"</div>"
-                +"</div>"
-                +"<div class=\"form-group\">"
-                +"<label class=\"col-sm-2 control-label\">To Be reffered To</label>"
-                +"<div class=\"col-sm-10\">"
-                +"<input type=\"text\" class=\"form-control\" name=\"doct\" placeholder=\"Left for Admin\" readonly>"
-                +"</div>"
-                +"</div>"
-                +"<div class=\"form-group\">"
-                +"<label class=\"col-sm-2 control-label\">Sex</label>"
-                +"<div class=\"col-sm-2\">"
-                +"<select class=\"form-control\" name=\"gender\">"
-                +"<option>Male</option>"
-                +"<option>Female</option>"
-                +"</select>"
-                +"</div>"
-                +"</div>"
-                +"<div class=\"form-group\">"
-                +"<label class=\"col-sm-2 control-label\">Admission Date</label>"
-                +"<div class=\"col-sm-10\">"
-                +"<input type=\"text\" class=\"form-control\" name=\"joindate\" placeholder=\"Left For Admin\" readonly>"
-                +"</div>"
-                +"</div>"
-                +"<div class=\"form-group\">"
-                +"<label class=\"col-sm-2 control-label\">Age</label>"
-                +"<div class=\"col-sm-10\">"
-                +"<input type=\"text\" class=\"form-control\" name=\"age\" placeholder=\"Age\" required>"
-                +"</div>"
-                +"</div>"
-                +"<div class=\"form-group\">"
-                +"<label class=\"col-sm-2 control-label\">Blood Group</label>"
-                +"<div class=\"col-sm-2\">"
-                +"<select class=\"form-control\" name=\"bgroup\">"
-                +"<option>A<sup>+</sup></option>"
-                +"<option>A<sup>-</sup></option>"
-                +"<option>B<sup>+</sup></option>"
-                +"<option>B<sup>-</sup></option>"
-                +"<option>AB<sup>+</sup></option>"
-                +"<option>AB<sup>-</sup></option>"
-                +"<option>O<sup>+</sup></option>"
-                +"<option>O<sup>-</sup></option>"
-                +"</select>"
-                +"</div>"
-                +"</div>"
-                +"<div style=\"text-align:center;font-weight:bold;color:red\">" + (actionError != null? actionError : "") + "</div>"
-                +"<div class=\"form-group\">"
-                +"<div class=\"col-sm-7 col-sm-offset-2\" style=\"margin:0 0 0 40%\">"
-                +"<button type=\"submit\" class=\"btn btn-primary\">Register As Patient Now</button>"
-                +"</div>"
-                +"</div>"
-                +"<br><Br><Br>"
-                +"</form>"
-                +"</div>"
-                +"</div>"
-                +"</div>"
-                +"</div>"+Footer.footer();
-    }
-
     public void insert(String patientName, String email, String password, String address, String phoneNumber, String reasonOfVisit, String gender, String age, String bloodGroup) {
         try {
             Connection connection = (Connection) servletCtx.getAttribute("dbConnection");

@@ -1,4 +1,4 @@
-<jsp:include page="header.jsp" />
+<jsp:include page="./header.jsp" />
 <div class="row">
     <div class="col-md-12">
         <br /><br /><br /><br /><br /><br /><br /><br />
@@ -32,9 +32,19 @@
                     </div>
                 </form>
             </div>
-            <div style="text-align:center;font-weight:bold;color:red"> <%= application.getAttribute("loginError") %> </div>
-            <a href="./register" style="text-align:Center;font-weight:bold;font-size:120%;padding: 0 2%">Register As Patient</a>
+            <div style="text-align:center;font-weight:bold;color:red">
+                <%
+                    String loginError = (String) application.getAttribute("loginError");
+
+                    if (loginError != null && !loginError.equals("")) {
+
+                %>
+                    <span style="color:red"> <%= application.getAttribute("loginError") %> </span><br/>
+
+                <% } %>
+            </div>
+            <a href="./register.jsp" style="text-align:Center;font-weight:bold;font-size:120%;padding: 0 2%">Register As Patient</a>
         </div>
     </div>
 </div>
-<jsp:include page="footer.jsp" />
+<jsp:include page="./footer.jsp" />
