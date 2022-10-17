@@ -1,6 +1,5 @@
 package com.hospital.actions.departmentactions;
 
-
 import com.hospital.common.CommonMethods;
 
 import javax.servlet.ServletConfig;

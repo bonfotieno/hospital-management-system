@@ -1,6 +1,6 @@
 package com.hospital.actions.departmentactions;
 
-import com.hospital.model.Department;
+import com.hospital.common.CommonMethods;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -9,12 +9,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Statement;
-import java.util.Iterator;
-import java.util.List;
 
 @WebServlet("/department/delete")
 public class DepartmentDelete extends HttpServlet {
@@ -25,10 +22,7 @@ public class DepartmentDelete extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        if (session.getAttribute("username") == null) { //checks if the previous session expired
-            session.invalidate();
-            resp.sendRedirect("");
+        if (CommonMethods.IsSessionExpired(req, resp)) {
             return;
         }
         String deptId = req.getParameter("deptId");
