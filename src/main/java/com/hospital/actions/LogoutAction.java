@@ -9,7 +9,6 @@ import java.io.IOException;
 
 @WebServlet("/logout")
 public class LogoutAction extends HttpServlet {
-
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         req.getSession().invalidate();
         res.sendRedirect("./");
