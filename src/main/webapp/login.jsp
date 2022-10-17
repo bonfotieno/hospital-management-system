@@ -1,4 +1,4 @@
-<jsp:include page="./header.jsp" />
+<%@ include file="./header.jsp" %>
 <div class="row">
     <div class="col-md-12">
         <br /><br /><br /><br /><br /><br /><br /><br />
@@ -47,4 +47,4 @@
         </div>
     </div>
 </div>
-<jsp:include page="./footer.jsp" />
+<%@ include file="./footer.jsp" %>

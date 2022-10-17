@@ -1,6 +1,8 @@
 package com.hospital.actions.departmentactions;
 
 
+import com.hospital.common.CommonMethods;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -8,7 +10,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Statement;
@@ -23,13 +24,9 @@ public class DepartmentEdit extends HttpServlet {
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        if (session.getAttribute("username") == null) { //checks if the previous session expired
-            session.invalidate();
-            resp.sendRedirect("");
+        if (CommonMethods.IsSessionExpired(req, resp)) {
             return;
         }
-
         String deptId = req.getParameter("deptId");
         String deptName = req.getParameter("deptName");
         String deptDesc = req.getParameter("deptDesc");
