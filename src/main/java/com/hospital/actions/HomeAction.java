@@ -10,7 +10,7 @@ import java.io.IOException;
 @WebServlet("/home")
 public class HomeAction extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        res.sendRedirect("./department");
+        res.sendRedirect("./department.jsp");
     }
 
 }
