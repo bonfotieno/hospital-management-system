@@ -1,4 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-    <% response.sendRedirect("./login.jsp"); %>
-</html>
+
+<%
+   if (session.getAttribute("username") == null) {
+%>
+        <jsp:forward page="./login.jsp" />
+<%
+   } else {
+%>
+        <jsp:forward page="./home" />
+<% } %>

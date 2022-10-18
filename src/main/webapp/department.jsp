@@ -6,7 +6,6 @@
 <%@ page import="java.util.List" %>
 <%@ include file="./main_content_header.jsp" %>
 <%! DepartmentController departmentController = new DepartmentController();
-    
     private long generateID(List<Department> departments){
             if (!departments.isEmpty()) {
                 return departments.get(departments.size()-1).getId()+1;
@@ -14,11 +13,9 @@
                 return 1;
         }
 %>
-
 <%
     CommonMethods.IsSessionExpired(request, response);
 %>
-
 <div class="row">
   <%@ include file="./menu_admin.jsp" %>
   <!-------   Content Area start  --------->
