@@ -23,9 +23,7 @@ public class DepartmentEdit extends HttpServlet {
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (CommonMethods.IsSessionExpired(req, resp)) {
-            return;
-        }
+        CommonMethods.IsSessionExpired(req, resp);
         String deptId = req.getParameter("deptId");
         String deptName = req.getParameter("deptName");
         String deptDesc = req.getParameter("deptDesc");

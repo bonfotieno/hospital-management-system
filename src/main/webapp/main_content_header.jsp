@@ -1,4 +1,4 @@
-<%@ page import="import com.hospital.listeners.SessionListener" %>
+<%@ page import="com.hospital.listeners.SessionListener" %>
 <!DOCTYPE html> +
     <html lang="en">
     <head>

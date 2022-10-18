@@ -22,9 +22,7 @@ public class DepartmentDelete extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (CommonMethods.IsSessionExpired(req, resp)) {
-            return;
-        }
+        CommonMethods.IsSessionExpired(req, resp);
         String deptId = req.getParameter("deptId");
 
         try {
