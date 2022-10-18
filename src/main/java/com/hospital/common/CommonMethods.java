@@ -6,12 +6,14 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class CommonMethods {
-    public static void IsSessionExpired(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public static boolean IsSessionExpired(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession();
         if (session.getAttribute("username") == null) { //checks if the previous session expired
             session.invalidate();
-            resp.sendRedirect("./login.jsp");
-            return;
+            resp.sendRedirect("");
+            return true;
+        } else {
+            return false;
         }
     }
 }
