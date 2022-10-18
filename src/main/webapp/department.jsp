@@ -14,7 +14,9 @@
         }
 %>
 <%
-    CommonMethods.IsSessionExpired(request, response);
+    if (CommonMethods.IsSessionExpired(request, response)) {
+                return;
+            }
 %>
 <div class="row">
   <%@ include file="./menu_admin.jsp" %>
@@ -51,7 +53,7 @@
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal<%= department.getId() %>">
                                     <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
                                 </button>
-                                <a href="./department/delete?deptId=<%= department.getId() %>" class="btn btn-danger" onclick="return confirmDelete()">
+                                <a data-confirm="Are you sure?" href="./department/delete?deptId=<%= department.getId() %>" class="btn btn-danger" onclick="return confirmDelete()">
                                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                 </a>
                              </td>
@@ -76,11 +78,11 @@
                                  <div class="panel panel-default">
                                      <div class="panel-body">
                                          <form class="form-horizontal" action="./department/edit" method="post">
-                                            <input type="hidden" id="custId" name="debtId" value="<%= department.getId() %>">
+                                             <!----- <input type="hidden" name="id" value="<%= department.getId() %>"> ---->
                                              <div class="form-group">
                                                  <label class="col-sm-4 control-label">Department ID</label>
                                                  <div class="col-sm-4">
-                                                     <input type="number" class="form-control" name="deptId" value="<%= department.getId() %>" readonly="readonly">
+                                                     <input type="number" class="form-control" name="id" value="<%= department.getId() %>" readonly="readonly">
                                                  </div>
                                              </div>
      
