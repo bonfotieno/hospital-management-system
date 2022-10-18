@@ -23,8 +23,29 @@ public class DepartmentController implements Serializable {
         }
     }
 
-    public void update(){}
-    public void delete(){}
+    public void update(Connection connection, Department department){
+        try {
+            Statement sqlStmt = connection.createStatement();
+            sqlStmt.executeUpdate(
+                    "UPDATE departments " +
+                            "SET " +
+                            "    name = '"+department.getDeptName()+"'," +
+                            "    description = '"+department.getDeptDesc()+"'" +
+                            "WHERE " +
+                            "    id=" + department.getId()
+            );
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    public void delete(Connection connection, Department department){
+        try {
+            Statement sqlStmt = connection.createStatement();
+            sqlStmt.executeUpdate("delete from departments where id=" + department.getId());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
     public List<Department> list(Connection connection, Department filter) {
         List<Department> departments = new ArrayList<Department>();
         try {
