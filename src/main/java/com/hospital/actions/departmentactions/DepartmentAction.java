@@ -25,7 +25,6 @@ import java.util.List;
 
 @WebServlet("/department")
 public class DepartmentAction extends HttpServlet {
-    private List<Department> departments = new ArrayList<>();
     ServletContext servletCtx = null;
     public void init(ServletConfig config) throws ServletException{
         super.init(config);

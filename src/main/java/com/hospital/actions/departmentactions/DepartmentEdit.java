@@ -42,9 +42,7 @@ public class DepartmentEdit extends HttpServlet {
 
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
-
         }
-
-        resp.sendRedirect("../department");
+        resp.sendRedirect("../department.jsp");
     }
 }

@@ -34,6 +34,6 @@ public class DepartmentDelete extends HttpServlet {
             System.out.println(ex.getMessage());
 
         }
-        resp.sendRedirect("../department");
+        resp.sendRedirect("../department.jsp");
     }
 }
