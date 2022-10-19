@@ -34,7 +34,7 @@ public class DepartmentAction extends HttpServlet {
         department.setId(Long.parseLong(req.getParameter("deptId")));
         Connection connection = (Connection) servletCtx.getAttribute("dbConnection");
         departmentController.delete(connection, department);
-        resp.sendRedirect("../department.jsp");
+        resp.sendRedirect("./department.jsp");
 
     }
 
@@ -49,7 +49,6 @@ public class DepartmentAction extends HttpServlet {
             System.out.println(ex.getMessage());
         }
         Connection connection = (Connection) servletCtx.getAttribute("dbConnection");
-        System.out.println("THE VALUES: "+req.getParameterMap().toString());
         if (req.getServletPath().equals("/department")) {
             if (StringUtils.isBlank(department.getDeptName())) {
                 //wr.print(this.addStudent("Name is required<br/>"));
@@ -65,7 +64,7 @@ public class DepartmentAction extends HttpServlet {
         }
         if (req.getServletPath().equals("/department-edit")) {
             departmentController.update(connection, department);
-            resp.sendRedirect("../department.jsp");
+            resp.sendRedirect("./department.jsp");
         }
     }
 }
