@@ -53,7 +53,7 @@
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal<%= department.getId() %>">
                                     <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
                                 </button>
-                                <a data-confirm="Are you sure?" href="./department/delete?deptId=<%= department.getId() %>" class="btn btn-danger" onclick="return confirmDelete()">
+                                <a data-confirm="Are you sure?" href="./department-delete?deptId=<%= department.getId() %>" class="btn btn-danger" onclick="return confirmDelete()">
                                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                 </a>
                              </td>
@@ -77,7 +77,7 @@
                              <div class="modal-body">
                                  <div class="panel panel-default">
                                      <div class="panel-body">
-                                         <form class="form-horizontal" action="./department/edit" method="post">
+                                         <form class="form-horizontal" action="./department-edit" method="post">
                                              <!----- <input type="hidden" name="id" value="<%= department.getId() %>"> ---->
                                              <div class="form-group">
                                                  <label class="col-sm-4 control-label">Department ID</label>

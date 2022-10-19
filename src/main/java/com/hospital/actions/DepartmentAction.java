@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 
-@WebServlet(urlPatterns = {"/department", "/department/edit", "/department/delete"})
+@WebServlet(urlPatterns = {"/department", "/department-edit", "/department-delete"})
 public class DepartmentAction extends HttpServlet {
     private final Department department = new Department();
     ServletContext servletCtx = null;
@@ -63,7 +63,7 @@ public class DepartmentAction extends HttpServlet {
             resp.sendRedirect("./department.jsp");
             return;
         }
-        if (req.getServletPath().equals("/department/edit")) {
+        if (req.getServletPath().equals("/department-edit")) {
             departmentController.update(connection, department);
             resp.sendRedirect("../department.jsp");
         }
