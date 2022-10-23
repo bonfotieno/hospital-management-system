@@ -1,3 +1,4 @@
+<%@ page isELIgnored="false" %>
 <%@ page import="com.hospital.listeners.SessionListener" %>
 <!DOCTYPE html>
     <html lang="en">
@@ -45,7 +46,7 @@
                   <ul class="nav nav-pills ">
                       <li class="dropdown dmenu">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                              aria-expanded="false"><%= (String) session.getAttribute("username") %><span class="caret"></span>
+                              aria-expanded="false">${sessionScope.username}<span class="caret"></span>
                           </a>
                           <ul class="dropdown-menu ">
                               <li><a href="./profile">Change Profile</a></li>

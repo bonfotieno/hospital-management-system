@@ -4,16 +4,16 @@
           <h1>Dashboard</h1>
       </a>
       <ul class="nav nav-pills nav-stacked">
-          <li class="fa fa-home" role="presentation"><a href="#">Department</a></li>
-          <li role="presentation"><a href="#">Doctors</a></li>
-          <li role="presentation"><a href="#">Patients</a></li>
-          <li role="presentation"><a href="#">Nurse</a></li>
-          <li role="presentation"><a href="#">Room</a></li>
-          <li role="presentation"><a href="#">Pathology</a></li>
-          <li role="presentation"><a href="#">Blood Donor</a></li>
-          <li role="presentation"><a href="#">Billing</a></li>
-          <li role="presentation"><a href="#">Search</a></li>
-          <li role="presentation"><a href="#">Settings</a></li>
+          <li role="presentation"><a href="department.jsp"><span class="glyphicon glyphicon-tasks"></span> Department</a></li>
+          <li role="presentation"><a href="doctor.jsp"><span class="glyphicon glyphicon-king"></span> Doctors</a></li>
+          <li role="presentation"><a href="#"><span class="glyphicon glyphicon-user"></span> Patients</a></li>
+          <li role="presentation"><a href="#"><span class="glyphicon glyphicon-queen"></span> Nurse</a></li>
+          <li role="presentation"><a href="#"><span class="glyphicon glyphicon-bed"></span> Room</a></li>
+          <li role="presentation"><a href="#"><span class="glyphicon glyphicon-scale"></span> Pathology</a></li>
+          <li role="presentation"><a href="#"><span class="glyphicon glyphicon-tint"></span> Blood Donor</a></li>
+          <li role="presentation"><a href="#"><span class="glyphicon glyphicon-usd"></span> Billing</a></li>
+          <li role="presentation"><a href="#"><span class="glyphicon glyphicon-search"></span> Search</a></li>
+          <li role="presentation"><a href="#"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
       </ul>
   </div>
   <!---- Menu Ares Ends  -------->
