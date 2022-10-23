@@ -22,7 +22,6 @@ public class DepartmentController implements Serializable {
             System.out.println(ex.getMessage());
         }
     }
-
     public void update(Connection connection, Department department){
         try {
             Statement sqlStmt = connection.createStatement();
