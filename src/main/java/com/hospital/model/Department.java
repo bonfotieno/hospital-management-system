@@ -1,7 +1,5 @@
 package com.hospital.model;
 
-import java.io.Serializable;
-
 public class Department extends BaseEntity {
     private String deptName;
     private String deptDesc;

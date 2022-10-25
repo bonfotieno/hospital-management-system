@@ -3,6 +3,11 @@
 <%@ page import="com.hospital.common.CommonMethods" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.ArrayList" %>
+
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix ="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <%@ page import="java.util.List" %>
 <%@ include file="./main_content_header.jsp" %>
 <%! DepartmentController departmentController = new DepartmentController();
@@ -43,22 +48,24 @@
                      </tr>
                     <%
                         List<Department> departments = departmentController.list((Connection) application.getAttribute("dbConnection"), new Department());
-                        for (Department department : departments){
+                        pageContext.setAttribute("departments", departments);
                     %>
+                    <c:forEach items="${departments}" var="department">
+                    <c:set var = "id" value = "${department.id}" />
                         <tr>
-                             <td><%= department.getId() %></td>
-                             <td><%= department.getDeptName() %></td>
-                             <td><%= department.getDeptDesc() %></td>
+                             <td><fmt:formatNumber value = "${id}" type = "number" minFractionDigits = "10" /></td>
+                             <td>${department.deptName}</td>
+                             <td>${department.deptDesc}</td>
                              <td>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal<%= department.getId() %>">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal${department.deptName}">
                                     <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
                                 </button>
-                                <a data-confirm="Are you sure?" href="./department-delete?deptId=<%= department.getId() %>" class="btn btn-danger" onclick="return confirmDelete()">
+                                <a data-confirm="Are you sure?" href="./department-delete?deptId=${department.deptName}" class="btn btn-danger" onclick="return confirmDelete()">
                                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                 </a>
                              </td>
                         </tr>
-                    <% } %>
+                    </c:forEach>
                 </table>
               </div>
               <!----------------   Display Department Data List ends   --------------->
