@@ -126,7 +126,7 @@
               <div id="adddoctor" class="switchgroup">
                   <div class="panel panel-default">
                       <div class="panel-body">
-                          <form class="form-horizontal" action="./department" method="post">
+                          <form class="form-horizontal" action="./department-add" method="post">
                               <div class="form-group">
                                   <label class="col-sm-4 control-label">Department ID</label>
                                   <div class="col-sm-4">

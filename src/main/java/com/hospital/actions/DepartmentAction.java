@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 
-@WebServlet(urlPatterns = {"/department", "/department-edit", "/department-delete"})
+@WebServlet(urlPatterns = {"/department-add", "/department-edit", "/department-delete"})
 public class DepartmentAction extends HttpServlet {
     private final Department department = new Department();
     ServletContext servletCtx = null;
@@ -49,7 +49,7 @@ public class DepartmentAction extends HttpServlet {
             System.out.println(ex.getMessage());
         }
         Connection connection = (Connection) servletCtx.getAttribute("dbConnection");
-        if (req.getServletPath().equals("/department")) {
+        if (req.getServletPath().equals("/department-add")) {
             if (StringUtils.isBlank(department.getDeptName())) {
                 //wr.print(this.addStudent("Name is required<br/>"));
                 return;
