@@ -1,7 +1,9 @@
+<!-- custom tags -->
 <%@ taglib prefix="cht" uri="WEB-INF/tlds/header.tld" %>
 <%@ taglib prefix="cft" uri="WEB-INF/tlds/footer.tld" %>
+<!-- <cht:Header></cht:Header> -->
 
-<cht:Header></cht:Header>
+<%@ include file="./header.jsp" %>
 <div class="row">
     <div class="col-md-12">
         <br /><br /><br /><br /><br /><br /><br /><br />
@@ -50,4 +52,6 @@
         </div>
     </div>
 </div>
-<cft:Footer> Botien Technologies </cft:Footer>
+<%@ include file="./footer.jsp" %>
+
+<!-- <cft:Footer> Botien Technologies </cft:Footer> -->
