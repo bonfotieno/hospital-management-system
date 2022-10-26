@@ -13,6 +13,19 @@
             }
 %>
 
-<%@ include file="./main_content_header.jsp" %>
+<jsp:include page="./main_content_header.jsp" />
 
-<%@ include file="./main_content_footer.jsp" %>
+<div class="row">
+    <%@ include file="./menu_admin.jsp" %>
+    <!-------   Content Area start  --------->
+    
+    <!-------   Content Area Ends  --------->
+</div>
+
+<script>
+    function confirmDelete()
+    {
+        return confirm("Do You Really Want to Delete the Room?");
+    }
+</script>
+<jsp:include page="./main_content_footer.jsp" />

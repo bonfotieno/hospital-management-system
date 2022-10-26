@@ -164,4 +164,10 @@
   </div>
   <!-------   Content Area Ends  --------->
 </div>
+<script>
+    function confirmDelete()
+    {
+        return confirm("Do You Really Want to Delete the Department?");
+    }
+</script>
 <%@ include file="./main_content_footer.jsp" %>
