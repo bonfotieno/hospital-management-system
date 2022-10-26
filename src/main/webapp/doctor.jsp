@@ -230,7 +230,7 @@
                                             <option selected="selected">Select Department</option>
                                             <%  Connection c = (Connection) application.getAttribute("dbConnection");
                                                 String deptName; int deptId; PreparedStatement ps; ResultSet resultSet;
-                                                ps=c.prepareStatement("select * from departments",ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+                                                ps=c.prepareStatement("select id, name from departments",ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
                                                 resultSet=ps.executeQuery(); while(resultSet.next()) { deptId=resultSet.getInt(1);
                                                 deptName=resultSet.getString(2); %>
                                                 <option value="<%=deptName%>">

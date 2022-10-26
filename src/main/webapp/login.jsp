@@ -1,4 +1,7 @@
-<%@ include file="./header.jsp" %>
+<%@ taglib prefix="cht" uri="WEB-INF/tlds/header.tld" %>
+<%@ taglib prefix="cft" uri="WEB-INF/tlds/footer.tld" %>
+
+<cht:Header></cht:Header>
 <div class="row">
     <div class="col-md-12">
         <br /><br /><br /><br /><br /><br /><br /><br />
@@ -47,4 +50,4 @@
         </div>
     </div>
 </div>
-<%@ include file="./footer.jsp" %>
+<cft:Footer> Botien Technologies </cft:Footer>

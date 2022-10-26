@@ -2,10 +2,12 @@ package com.hospital.listeners;
 
 import com.zaxxer.hikari.HikariDataSource;
 
+import javax.naming.InitialContext;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
@@ -18,11 +20,8 @@ public class AppContextListener implements ServletContextListener {
         ctx.setAttribute("applicationLabel", "Botien | Online Hospital Management System");
         try {
             System.out.print("Establishing connections....");
-            HikariDataSource dataSource = new HikariDataSource();
-            dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/hospital_sys");
-            dataSource.setPassword("PASSWORD");
-            dataSource.setUsername("root");
-            dataSource.setMinimumIdle(1);
+            InitialContext ictx = new InitialContext();
+            DataSource dataSource = (DataSource) ictx.lookup("java:jboss/datasources/hospital_sys");
 
             Connection connection = dataSource.getConnection();
             ctx.setAttribute("dbConnection", connection);

@@ -1,0 +1,10 @@
+<taglib>
+    <tlib-version>1.0</tlib-version>
+    <jsp-version>1.2</jsp-version>
+    <short-name>header</short-name>
+    <tag>
+        <name>Header</name>
+        <tag-class>com.hospital.customtags.HeaderTag</tag-class>
+        <body-content>scriptless</body-content>
+    </tag>
+</taglib>
