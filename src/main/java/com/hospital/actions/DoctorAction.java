@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = {"/doctor", "/doctor-edit", "/doctor-delete"})
+@WebServlet(urlPatterns = {"/doctor-add", "/doctor-edit", "/doctor-delete"})
 public class DoctorAction extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
