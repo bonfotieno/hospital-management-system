@@ -10,29 +10,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DoctorController {
-    public void add(Connection connection, Doctor doctor){
+    public void add(Connection connection, Doctor doctor, String password){
         if (doctor == null || StringUtils.isBlank(doctor.getName()) || StringUtils.isBlank(doctor.getEmail() )|| StringUtils.isBlank(doctor.getPhone()))
             return;
         try {
             Statement sqlStmt = connection.createStatement();
-            sqlStmt.executeUpdate("insert into doctors(name,email,address,phone,department_id) " +
-                    "values('" + doctor.getName() + "','" + doctor.getEmail() + "','" +  doctor.getAddress() + doctor.getPhone() + "'," +
-                    "select id from departments where name='" +doctor.getDepartmentName() + "')");
+            sqlStmt.executeUpdate("insert into doctors(name,email,password,address,phone,department_id) " +
+                    "values('" + doctor.getName() + "','" + doctor.getEmail() + "','" + password + "','" +  doctor.getAddress() +"','"+ doctor.getPhone() + "'," +
+                    "(select id from departments where name='" +doctor.getDepartmentName() + "'))");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
     }
-    public void update(Connection connection, Doctor doctor){
+    public void update(Connection connection, Doctor doctor, String password){
         try {
             Statement sqlStmt = connection.createStatement();
             sqlStmt.executeUpdate(
                     "UPDATE doctors " +
                             "SET " +
                             "    name = '"+doctor.getName()+"'," +
-                            "    email = '"+doctor.getEmail()+"'" +
-                            "    address = '"+doctor.getAddress()+"'" +
-                            "    phone = '"+doctor.getPhone()+"'" +
-                            "    select id from departments where name='" +doctor.getDepartmentName() + "'"+
+                            "    email = '"+doctor.getEmail()+"'," +
+                            (password.equals("passwoord_here")?"":" password = '"+password+"',") +
+                            "    address = '"+doctor.getAddress()+"'," +
+                            "    phone = '"+doctor.getPhone()+"'," +
+                            "    department_id = (select id from departments where name='" +doctor.getDepartmentName() + "') "+
                             "WHERE " +
                             "    id=" + doctor.getId()
             );
@@ -52,7 +53,9 @@ public class DoctorController {
         List<Doctor> doctors = new ArrayList<Doctor>();
         try {
             Statement sqlStmt = connection.createStatement();
-            ResultSet result = sqlStmt.executeQuery("select * from doctors");
+            ResultSet result = sqlStmt.executeQuery("SELECT doctors.id, doctors.name, doctors.email, doctors.address, doctors.phone, departments.name\n" +
+                                                        "FROM doctors\n" +
+                                                        "INNER JOIN departments ON doctors.department_id=departments.id;");
             while (result.next()) {
                 Doctor doctor = new Doctor();
                 doctor.setId((long) result.getInt("id"));
@@ -60,12 +63,12 @@ public class DoctorController {
                 doctor.setEmail(result.getString("email"));
                 doctor.setAddress(result.getString("address"));
                 doctor.setPhone(result.getString("phone"));
-                ResultSet deptResult = sqlStmt.executeQuery("select name from departments where id="+(long) result.getInt("department_id"));
-                doctor.setDepartmentName(deptResult.getString("name"));
+                doctor.setDepartmentName(result.getString(6));
                 doctors.add(doctor);
             }
         }catch (Exception ex) {
             System.out.println(ex.getMessage());
+            //ex.printStackTrace();
         }
         return doctors;
     }

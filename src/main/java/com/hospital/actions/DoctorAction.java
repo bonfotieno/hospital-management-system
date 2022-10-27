@@ -31,7 +31,6 @@ public class DoctorAction extends HttpServlet {
             return;
         }
         doctor.setId(Long.parseLong(req.getParameter("id")));
-        System.out.println("\n\nUNIQUEID: "+ req.getParameter("uniqueID")+"\n\n");
         Connection connection = (Connection) servletCtx.getAttribute("dbConnection");
         doctorController.delete(connection, doctor);
         resp.sendRedirect("./doctor.jsp");
@@ -65,12 +64,12 @@ public class DoctorAction extends HttpServlet {
                 //add validation here
                 return;
             }
-            doctorController.add(connection, doctor);
+            doctorController.add(connection, doctor, req.getParameter("pwd"));
             resp.sendRedirect("./doctor.jsp");
             return;
         }
         if (req.getServletPath().equals("/doctor-edit")) {
-            doctorController.update(connection, doctor);
+            doctorController.update(connection, doctor, req.getParameter("pwd"));
             resp.sendRedirect("./doctor.jsp");
         }
     }
