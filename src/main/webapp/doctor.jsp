@@ -66,7 +66,7 @@
                                 <a href="#"><button type="button" class="btn btn-primary" data-toggle="modal"
                                         data-target="#myModal<%= doctor.getId() %>"><span class="glyphicon glyphicon-wrench"
                                             aria-hidden="true"></span></button></a>
-                                <a href="delete_doct_validation.jsp?doctId=<%= doctor.getId() %>"
+                                <a href="./room-delete?id=<%= doctor.getId() %>"
                                     onclick="return confirmDelete()" class="btn btn-danger"><span
                                         class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                             </td>
@@ -98,7 +98,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label">Doctor Id:</label>
                                                 <div class="col-sm-10">
-                                                    <input type="number" class="form-control" name="doctid"
+                                                    <input type="number" class="form-control" name="id"
                                                         placeholder="Doctor ID" value="<%= doctor.getId() %>"
                                                         readonly="readonly">
                                                 </div>
@@ -107,7 +107,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label">Name</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" name="doctname"
+                                                    <input type="text" class="form-control" name="name"
                                                         value="<%= doctor.getName() %>" placeholder="Name">
                                                 </div>
                                             </div>
@@ -149,7 +149,7 @@
                                                 <label class="col-sm-2 control-label">Department</label>
                                                 <div class="col-sm-10">
 
-                                                    <select class="form-control" name="dept">
+                                                    <select class="form-control" name="departmentName">
                                                         <option selected="selected">
                                                             <%= doctor.getDepartmentName() %>
                                                         </option>
@@ -181,14 +181,14 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Doctor Id:</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control" name="doctid"
+                                        <input type="number" class="form-control" name="id"
                                             placeholder="Doctor ID Auto Generated" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Name</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="doctname"
+                                        <input type="text" class="form-control" name="name"
                                             placeholder="Name" required="required">
                                     </div>
                                 </div>
@@ -226,8 +226,8 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Department</label>
                                     <div class="col-sm-10">
-                                        <select class="form-control" name="dept">
-                                            <option selected="selected">Select Department</option>
+                                        <select class="form-control" name="departmentName">
+                                            <option value="none" selected disabled hidden>Select a Department</option>
                                             <%  Connection c = (Connection) application.getAttribute("dbConnection");
                                                 String deptName; PreparedStatement ps; ResultSet resultSet;
                                                 ps=c.prepareStatement("select name from departments",ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
