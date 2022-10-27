@@ -35,7 +35,6 @@ public class DepartmentAction extends HttpServlet {
         Connection connection = (Connection) servletCtx.getAttribute("dbConnection");
         departmentController.delete(connection, department);
         resp.sendRedirect("./department.jsp");
-
     }
 
     @Override
@@ -51,11 +50,11 @@ public class DepartmentAction extends HttpServlet {
         Connection connection = (Connection) servletCtx.getAttribute("dbConnection");
         if (req.getServletPath().equals("/department-add")) {
             if (StringUtils.isBlank(department.getDeptName())) {
-                //wr.print(this.addStudent("Name is required<br/>"));
+                //add validation here
                 return;
             }
             if (StringUtils.isBlank(department.getDeptDesc())) {
-                //wr.print(this.addStudent("Reg No is required<br/>"));
+                //add validation here
                 return;
             }
             departmentController.add(connection, department);

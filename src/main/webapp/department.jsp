@@ -1,3 +1,4 @@
+<%@ page isELIgnored="false" %>
 <%@ page import="com.hospital.controllers.DepartmentController" %>
 <%@ page import="com.hospital.model.Department" %>
 <%@ page import="com.hospital.common.CommonMethods" %>
@@ -53,14 +54,14 @@
                     <c:forEach items="${departments}" var="department">
                     <c:set var = "id" value = "${department.id}" />
                         <tr>
-                             <td><fmt:formatNumber value = "${id}" type = "number" minFractionDigits = "10" /></td>
+                             <td><fmt:formatNumber value = "${id}" type = "number" minFractionDigits = "" /></td>
                              <td>${department.deptName}</td>
                              <td>${department.deptDesc}</td>
                              <td>
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal${department.deptName}">
                                     <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
                                 </button>
-                                <a data-confirm="Are you sure?" href="./department-delete?deptId=${department.deptName}" class="btn btn-danger" onclick="return confirmDelete()">
+                                <a data-confirm="Are you sure?" href="./department-delete?deptId=${department.id}" class="btn btn-danger" onclick="return confirmDelete()">
                                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                 </a>
                              </td>
