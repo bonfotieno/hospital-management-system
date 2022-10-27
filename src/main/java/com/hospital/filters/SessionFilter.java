@@ -22,7 +22,6 @@ public class SessionFilter implements Filter {
         HttpSession session = httpReq.getSession(); //returns existing session or creates if not existing
 
         String reqPath = httpReq.getServletPath();
-        System.out.println(session.getAttribute(""));
         if (reqPath == null) {
             session.invalidate();
             httpRes.sendRedirect("./");

@@ -12,7 +12,7 @@ public class RequestListener implements ServletRequestListener {
     public void requestInitialized(ServletRequestEvent sre) {
         System.out.println(">>>>Request Made: " + sre.getServletContext().getContextPath());
         ServletRequest sr = sre.getServletRequest();
-        HttpServletRequest request = (HttpServletRequest) sr;  // Cast to subinterface.
+        HttpServletRequest request = (HttpServletRequest) sr;  // Cast to subInterface.
 
         String method = request.getMethod();
         Map<String,String[]> parameters = request.getParameterMap();
