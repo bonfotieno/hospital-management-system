@@ -66,7 +66,7 @@
                                 <a href="#"><button type="button" class="btn btn-primary" data-toggle="modal"
                                         data-target="#myModal<%= doctor.getId() %>"><span class="glyphicon glyphicon-wrench"
                                             aria-hidden="true"></span></button></a>
-                                <a href="./room-delete?id=<%= doctor.getId() %>"
+                                <a href="./doctor-delete?id=<%= doctor.getId() %>"
                                     onclick="return confirmDelete()" class="btn btn-danger"><span
                                         class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                             </td>
