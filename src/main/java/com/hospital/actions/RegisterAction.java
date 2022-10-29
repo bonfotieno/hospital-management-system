@@ -2,6 +2,7 @@ package com.hospital.actions;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -19,7 +21,8 @@ public class RegisterAction extends HttpServlet {
     ServletConfig config = null;
     ServletContext servletCtx = null;
     private PrintWriter wr;
-
+    @Resource(lookup = "java:jboss/datasources/hospital_sys")
+    DataSource dataSource;
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
@@ -64,7 +67,7 @@ public class RegisterAction extends HttpServlet {
     }
     public void insert(String patientName, String email, String password, String address, String phoneNumber, String reasonOfVisit, String gender, String age, String bloodGroup) {
         try {
-            Connection connection = (Connection) servletCtx.getAttribute("dbConnection");
+            Connection connection = dataSource.getConnection();
             Statement sqlStmt = connection.createStatement();
             sqlStmt.executeUpdate("insert into patients(name, email, password, address, phone, reason_of_visit, gender, age, blood_group) " +
                     "values('" + patientName.trim() + "','" + email + "','" + password + "','" + address +"','" + phoneNumber + "','" + reasonOfVisit +"','" + gender +"','" + Integer.parseInt(age) +"','" + bloodGroup +"')");

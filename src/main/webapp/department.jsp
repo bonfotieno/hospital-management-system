@@ -48,7 +48,7 @@
                          <td>Options</td>
                      </tr>
                     <%
-                        List<Department> departments = departmentController.list((Connection) application.getAttribute("dbConnection"), new Department());
+                        List<Department> departments = departmentController.list(new Department());
                         pageContext.setAttribute("departments", departments);
                     %>
                     <c:forEach items="${departments}" var="department">

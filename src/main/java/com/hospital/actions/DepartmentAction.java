@@ -6,6 +6,7 @@ import com.hospital.model.Department;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.inject.Inject;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -20,7 +21,8 @@ import java.sql.Connection;
 public class DepartmentAction extends HttpServlet {
     private final Department department = new Department();
     ServletContext servletCtx = null;
-    private final DepartmentController departmentController = new DepartmentController();
+    @Inject
+    DepartmentController departmentController;
     public void init(ServletConfig config) throws ServletException{
         super.init(config);
         servletCtx = config.getServletContext();
@@ -33,7 +35,7 @@ public class DepartmentAction extends HttpServlet {
         }
         department.setId(Long.parseLong(req.getParameter("deptId")));
         Connection connection = (Connection) servletCtx.getAttribute("dbConnection");
-        departmentController.delete(connection, department);
+        departmentController.delete(department);
         resp.sendRedirect("./department.jsp");
     }
 
@@ -57,12 +59,12 @@ public class DepartmentAction extends HttpServlet {
                 //add validation here
                 return;
             }
-            departmentController.add(connection, department);
+            departmentController.add(department);
             resp.sendRedirect("./department.jsp");
             return;
         }
         if (req.getServletPath().equals("/department-edit")) {
-            departmentController.update(connection, department);
+            departmentController.update(department);
             resp.sendRedirect("./department.jsp");
         }
     }

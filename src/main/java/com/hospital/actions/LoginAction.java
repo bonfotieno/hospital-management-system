@@ -4,6 +4,7 @@ import com.hospital.model.Admin;
 import com.hospital.model.Patient;
 import org.apache.commons.codec.digest.DigestUtils;
 
+import javax.annotation.Resource;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -21,6 +23,8 @@ import java.util.Date;
 
 @WebServlet(urlPatterns = "/login")
 public class LoginAction extends HttpServlet {
+    @Resource(lookup = "java:jboss/datasources/hospital_sys")
+    DataSource dataSource;
     ServletContext servletCtx = null;
     public void init(ServletConfig config) throws ServletException{
         super.init(config);
@@ -71,7 +75,7 @@ public class LoginAction extends HttpServlet {
     public Admin loginAdmin(String email, String password) {
         Admin user = null;
         try {
-            Connection connection = (Connection) servletCtx.getAttribute("dbConnection");
+            Connection connection = dataSource.getConnection();
             Statement sqlStmt = connection.createStatement();
 
             ResultSet result = sqlStmt.executeQuery("select * from admins where email='" + email + "' and " +
@@ -94,7 +98,7 @@ public class LoginAction extends HttpServlet {
         Patient user = null;
 
         try {
-            Connection connection = (Connection) servletCtx.getAttribute("dbConnection");
+            Connection connection = dataSource.getConnection();;
             Statement sqlStmt = connection.createStatement();
 
             ResultSet result = sqlStmt.executeQuery("select * from patients where email='" + email + "' and " +
@@ -116,6 +120,7 @@ public class LoginAction extends HttpServlet {
 
         }catch (Exception ex) {
             System.out.println("Log In Error: " + ex.getMessage());
+            ex.printStackTrace();
         }
 
         return user;
