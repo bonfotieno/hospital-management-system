@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.io.Serializable;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -50,10 +51,10 @@ public class DepartmentController implements Serializable {
             System.out.println(ex.getMessage());
         }
     }
-    public List<Department> list(Department filter) {
+    public List<Department> list(Connection connection, Department filter) {
         List<Department> departments = new ArrayList<Department>();
         try {
-            Statement sqlStmt = dataSource.getConnection().createStatement();
+            Statement sqlStmt = connection.createStatement();
             ResultSet result = sqlStmt.executeQuery("select * from departments");
             while (result.next()) {
                 Department department = new Department();

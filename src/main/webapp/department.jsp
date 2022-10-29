@@ -4,6 +4,7 @@
 <%@ page import="com.hospital.common.CommonMethods" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="com.zaxxer.hikari.HikariDataSource" %>
 
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix ="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -12,6 +13,10 @@
 <%@ page import="java.util.List" %>
 <%@ include file="./main_content_header.jsp" %>
 <%! DepartmentController departmentController = new DepartmentController();
+
+    Connection connection;
+    HikariDataSource dataSource = new HikariDataSource();
+
     private long generateID(List<Department> departments){
             if (!departments.isEmpty()) {
                 return departments.get(departments.size()-1).getId()+1;
@@ -23,6 +28,10 @@
     if (CommonMethods.IsSessionExpired(request, response)) {
                 return;
             }
+    dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/hospital_sys");
+    dataSource.setPassword("PASSWORD");
+    dataSource.setUsername("root");
+    connection = dataSource.getConnection();
 %>
 <div class="row">
   <%@ include file="./menu_admin.jsp" %>
@@ -48,7 +57,7 @@
                          <td>Options</td>
                      </tr>
                     <%
-                        List<Department> departments = departmentController.list(new Department());
+                        List<Department> departments = departmentController.list(connection, new Department());
                         pageContext.setAttribute("departments", departments);
                     %>
                     <c:forEach items="${departments}" var="department">
