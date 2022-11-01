@@ -75,4 +75,20 @@ public class DepartmentController implements Serializable {
     public void setList(List<Department> list) {
         this.list = list;
     }
+
+
+    /* Getting name
+    *
+    * <%  Connection c = (Connection) application.getAttribute("dbConnection");
+        String deptName; PreparedStatement ps; ResultSet resultSet;
+        ps=c.prepareStatement("select name from departments",ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+        resultSet=ps.executeQuery();
+        while(resultSet.next()) {
+            deptName=resultSet.getString(1); %>
+            <option value="<%=deptName%>">
+                <%= deptName %>
+            </option>
+        <% } %>
+    *
+    * */
 }

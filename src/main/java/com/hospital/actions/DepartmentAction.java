@@ -19,8 +19,8 @@ import java.io.IOException;
 @WebServlet(urlPatterns = {"/department-add", "/department-edit", "/department-delete"})
 public class DepartmentAction extends HttpServlet {
     private final Department department = new Department();
-    ServletContext servletCtx = null;
     private final DepartmentController departmentController;
+    ServletContext servletCtx = null;
     @Inject
     public DepartmentAction(DepartmentController departmentController) {
         this.departmentController = departmentController;
