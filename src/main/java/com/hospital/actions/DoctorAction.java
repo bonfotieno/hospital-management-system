@@ -6,6 +6,7 @@ import com.hospital.model.Doctor;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.inject.Inject;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -14,16 +15,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
 
 @WebServlet(urlPatterns = {"/doctor-add", "/doctor-edit", "/doctor-delete"})
 public class DoctorAction extends HttpServlet {
     private final Doctor doctor = new Doctor();
     ServletContext servletCtx = null;
-    private final DoctorController doctorController = new DoctorController();
+    private DoctorController doctorController;
     public void init(ServletConfig config) throws ServletException{
         super.init(config);
         servletCtx = config.getServletContext();
+        this.setDoctorController(doctorController);
+    }
+
+    @Inject
+    private void setDoctorController(DoctorController doctorController){
+        this.doctorController = doctorController;
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -31,12 +37,12 @@ public class DoctorAction extends HttpServlet {
             return;
         }
         doctor.setId(Long.parseLong(req.getParameter("id")));
-        Connection connection = (Connection) servletCtx.getAttribute("dbConnection");
-        doctorController.delete(connection, doctor);
+        doctorController.delete(doctor);
         resp.sendRedirect("./doctor.jsp");
     }
 
     @Override
+
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (CommonMethods.IsSessionExpired(req, resp)) {
             return;
@@ -46,7 +52,6 @@ public class DoctorAction extends HttpServlet {
         } catch (Exception ex){
             System.out.println(ex.getMessage());
         }
-        Connection connection = (Connection) servletCtx.getAttribute("dbConnection");
         if (req.getServletPath().equals("/doctor-add")) {
             if (StringUtils.isBlank(doctor.getName())) {
                 //add validation here
@@ -64,12 +69,12 @@ public class DoctorAction extends HttpServlet {
                 //add validation here
                 return;
             }
-            doctorController.add(connection, doctor, req.getParameter("pwd"));
+            doctorController.add(doctor, req.getParameter("pwd"));
             resp.sendRedirect("./doctor.jsp");
             return;
         }
         if (req.getServletPath().equals("/doctor-edit")) {
-            doctorController.update(connection, doctor, req.getParameter("pwd"));
+            doctorController.update(doctor, req.getParameter("pwd"));
             resp.sendRedirect("./doctor.jsp");
         }
     }
