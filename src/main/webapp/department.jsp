@@ -4,7 +4,6 @@
 <%@ page import="com.hospital.common.CommonMethods" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.zaxxer.hikari.HikariDataSource" %>
 
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix ="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -12,12 +11,8 @@
 
 <%@ page import="java.util.List" %>
 <%@ include file="./main_content_header.jsp" %>
-<%! DepartmentController departmentController = new DepartmentController();
 
-    Connection connection;
-    HikariDataSource dataSource = new HikariDataSource();
-
-    private long generateID(List<Department> departments){
+<%! private long generateID(List<Department> departments){
             if (!departments.isEmpty()) {
                 return departments.get(departments.size()-1).getId()+1;
             }else
@@ -28,10 +23,6 @@
     if (CommonMethods.IsSessionExpired(request, response)) {
                 return;
             }
-    dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/hospital_sys");
-    dataSource.setPassword("PASSWORD");
-    dataSource.setUsername("root");
-    connection = dataSource.getConnection();
 %>
 <div class="row">
   <%@ include file="./menu_admin.jsp" %>
@@ -56,18 +47,15 @@
                          <td>Department Description</td>
                          <td>Options</td>
                      </tr>
-                    <%
-                        List<Department> departments = departmentController.list(connection, new Department());
-                        pageContext.setAttribute("departments", departments);
-                    %>
-                    <c:forEach items="${departments}" var="department">
+
+                    <c:forEach items="${departmentController.list}" var="department">
                     <c:set var = "id" value = "${department.id}" />
                         <tr>
                              <td><fmt:formatNumber value = "${id}" type = "number" minFractionDigits = "" /></td>
                              <td>${department.deptName}</td>
                              <td>${department.deptDesc}</td>
                              <td>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal${department.deptName}">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal${department.id}">
                                     <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
                                 </button>
                                 <a data-confirm="Are you sure?" href="./department-delete?deptId=${department.id}" class="btn btn-danger" onclick="return confirmDelete()">
@@ -81,10 +69,8 @@
               <!----------------   Display Department Data List ends   --------------->
 
               <!------ Edit Department Modal Start ---------->
-              <%
-                for (Department department : departments) {
-              %>
-               <div class="modal fade" id="myModal<%= department.getId() %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <c:forEach items="${departmentController.list}" var="department">
+               <div class="modal fade" id="myModal${department.id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                      <div class="modal-dialog" role="document">
                          <div class="modal-content">
                              <div class="modal-header">
@@ -95,25 +81,25 @@
                                  <div class="panel panel-default">
                                      <div class="panel-body">
                                          <form class="form-horizontal" action="./department-edit" method="post">
-                                             <!----- <input type="hidden" name="id" value="<%= department.getId() %>"> ---->
+                                             <!----- <input type="hidden" name="id" value="${department.id}"> ---->
                                              <div class="form-group">
                                                  <label class="col-sm-4 control-label">Department ID</label>
                                                  <div class="col-sm-4">
-                                                     <input type="number" class="form-control" name="id" value="<%= department.getId() %>" readonly="readonly">
+                                                     <input type="number" class="form-control" name="id" value="${department.id}" readonly="readonly">
                                                  </div>
                                              </div>
      
                                              <div class="form-group">
                                                  <label class="col-sm-4 control-label">Department Name</label>
                                                  <div class="col-sm-4">
-                                                     <input type="text" class="form-control" name="deptName" value="<%= department.getDeptName() %>">
+                                                     <input type="text" class="form-control" name="deptName" value="${department.deptName}">
                                                  </div>
                                              </div>
         
                                              <div class="form-group">
                                                  <label class="col-sm-4 control-label">Department Description</label>
                                                  <div class="col-sm-4">
-                                                     <input type="text" class="form-control" name="deptDesc" value="<%= department.getDeptDesc() %>">
+                                                     <input type="text" class="form-control" name="deptDesc" value="${department.deptDesc}">
                                                  </div>
                                              </div>
         
@@ -129,7 +115,7 @@
                          </div>
                      </div>
                 </div>
-              <% } %>
+              </c:forEach>
               <!----------------   Modal ends here  --------------->
 
               <!----------------   Add Department Start   --------------->
@@ -140,7 +126,7 @@
                               <div class="form-group">
                                   <label class="col-sm-4 control-label">Department ID</label>
                                   <div class="col-sm-4">
-                                      <input type="number" class="form-control" name="deptId" placeholder="<%= this.generateID(departments) %>" readonly>
+                                      <input type="number" class="form-control" name="deptId" placeholder="Auto Generated" readonly>
                                   </div>
                               </div>
 

@@ -4,19 +4,22 @@ import com.hospital.model.Department;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Resource;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 import javax.sql.DataSource;
 import java.io.Serializable;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@RequestScoped
+@Named("departmentController")
 public class DepartmentController implements Serializable {
     @Resource(lookup = "java:jboss/datasources/hospital_sys")
     DataSource dataSource;
+    private List<Department> list;
     public void add(Department department){
         if (department == null || StringUtils.isBlank(department.getDeptName()) || StringUtils.isBlank(department.getDeptDesc()))
             return;
@@ -51,10 +54,10 @@ public class DepartmentController implements Serializable {
             System.out.println(ex.getMessage());
         }
     }
-    public List<Department> list(Connection connection, Department filter) {
+    public List<Department> getList() {
         List<Department> departments = new ArrayList<Department>();
         try {
-            Statement sqlStmt = connection.createStatement();
+            Statement sqlStmt = dataSource.getConnection().createStatement();
             ResultSet result = sqlStmt.executeQuery("select * from departments");
             while (result.next()) {
                 Department department = new Department();
@@ -66,6 +69,10 @@ public class DepartmentController implements Serializable {
         }catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
+        //list = departments;
         return departments;
+    }
+    public void setList(List<Department> list) {
+        this.list = list;
     }
 }

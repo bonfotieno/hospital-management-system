@@ -21,8 +21,11 @@ import java.sql.Connection;
 public class DepartmentAction extends HttpServlet {
     private final Department department = new Department();
     ServletContext servletCtx = null;
+    private final DepartmentController departmentController;
     @Inject
-    DepartmentController departmentController;
+    public DepartmentAction(DepartmentController departmentController) {
+        this.departmentController = departmentController;
+    }
     public void init(ServletConfig config) throws ServletException{
         super.init(config);
         servletCtx = config.getServletContext();
