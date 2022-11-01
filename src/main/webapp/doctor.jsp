@@ -5,7 +5,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 
-<jsp:useBean id="doctorController" class="com.hospital.controllers.DoctorController" />
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix ="c" %>
 
 <%
     if (CommonMethods.IsSessionExpired(request, response)) {
@@ -39,48 +39,43 @@
                             <td>Department</td>
                             <td>Options</td>
                         </tr>
-                        <%
-                            List<Doctor> doctors = doctorController.list((Connection) application.getAttribute("dbConnection"), new Doctor());
-                            for (Doctor doctor : doctors){
-                        %>
-                        <tr>
-                            <td>
-                                <%= doctor.getId() %>
-                            </td>
-                            <td>
-                                <%= doctor.getName() %>
-                            </td>
-                            <td>
-                                <%= doctor.getEmail() %>
-                            </td>
-                            <td>
-                                <%= doctor.getAddress() %>
-                            </td>
-                            <td>
-                                <%= doctor.getPhone() %>
-                            </td>
-                            <td>
-                                <%= doctor.getDepartmentName() %>
-                            </td>
-                            <td>
-                                <a href="#"><button type="button" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#myModal<%= doctor.getId() %>"><span class="glyphicon glyphicon-wrench"
-                                            aria-hidden="true"></span></button></a>
-                                <a href="./doctor-delete?id=<%= doctor.getId() %>"
-                                    onclick="return confirmDelete()" class="btn btn-danger"><span
-                                        class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                            </td>
-                        </tr>
-                        <% } %>
+                        <c:forEach items="${doctorController.list}" var="doctor">
+                            <tr>
+                                <td>
+                                    ${doctor.id}
+                                </td>
+                                <td>
+                                    ${doctor.name}
+                                </td>
+                                <td>
+                                    ${doctor.email}
+                                </td>
+                                <td>
+                                    ${doctor.address}
+                                </td>
+                                <td>
+                                    ${doctor.phone}
+                                </td>
+                                <td>
+                                    ${doctor.departmentName}
+                                </td>
+                                <td>
+                                    <a href="#"><button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#myModal${doctor.id}"><span class="glyphicon glyphicon-wrench"
+                                                aria-hidden="true"></span></button></a>
+                                    <a href="./doctor-delete?id=${doctor.id}"
+                                        onclick="return confirmDelete()" class="btn btn-danger"><span
+                                            class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                </td>
+                            </tr>
+                        </c:forEach>
                     </table>
                 </div>
                 <!----------------   Display Doctor Data List Ends  --------------->
 
                 <!------ Doctor Edit Info Modal Start Here ---------->
-                <%
-                    for (Doctor doctor : doctors) {
-                  %>
-                <div class="modal fade" id="myModal<%= doctor.getId() %>" tabindex="-1" role="dialog"
+                <c:forEach items="${doctorController.list}" var="doctor">
+                <div class="modal fade" id="myModal${doctor.id}" tabindex="-1" role="dialog"
                     aria-labelledby="myModalLabel">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -99,7 +94,7 @@
                                                 <label class="col-sm-2 control-label">Doctor Id:</label>
                                                 <div class="col-sm-10">
                                                     <input type="number" class="form-control" name="id"
-                                                        placeholder="Doctor ID" value="<%= doctor.getId() %>"
+                                                        placeholder="Doctor ID" value="${doctor.id}"
                                                         readonly="readonly">
                                                 </div>
                                             </div>
@@ -108,7 +103,7 @@
                                                 <label class="col-sm-2 control-label">Name</label>
                                                 <div class="col-sm-10">
                                                     <input type="text" class="form-control" name="name"
-                                                        value="<%= doctor.getName() %>" placeholder="Name">
+                                                        value="${doctor.name}" placeholder="Name">
                                                 </div>
                                             </div>
 
@@ -116,7 +111,7 @@
                                                 <label class="col-sm-2 control-label">Email</label>
                                                 <div class="col-sm-10">
                                                     <input type="email" class="form-control" name="email"
-                                                        value="<%= doctor.getEmail() %>" placeholder="Email">
+                                                        value="${doctor.email}" placeholder="Email">
                                                 </div>
                                             </div>
 
@@ -132,7 +127,7 @@
                                                 <label class="col-sm-2 control-label">Address</label>
                                                 <div class="col-sm-10">
                                                     <input type="text" class="form-control" name="address"
-                                                        value="<%= doctor.getAddress() %>" placeholder="Address">
+                                                        value="${doctor.address}" placeholder="Address">
                                                 </div>
                                             </div>
 
@@ -140,7 +135,7 @@
                                                 <label class="col-sm-2 control-label">Phone</label>
                                                 <div class="col-sm-10">
                                                     <input type="text" class="form-control" name="phone"
-                                                        value="<%= doctor.getPhone() %>" placeholder="Phone No.">
+                                                        value="${doctor.phone}" placeholder="Phone No.">
                                                 </div>
                                             </div>
 
@@ -151,7 +146,7 @@
 
                                                     <select class="form-control" name="departmentName">
                                                         <option selected="selected">
-                                                            <%= doctor.getDepartmentName() %>
+                                                            ${doctor.departmentName}
                                                         </option>
                                                         <option> Neurology</option>
                                                     </select>
@@ -170,7 +165,7 @@
                         </div>
                     </div>
                 </div>
-                <% } %>
+                </c:forEach>
                 <!----------------   Modal ends here  --------------->
 
                 <!----------------   Add Doctor Start   --------------->
@@ -228,16 +223,11 @@
                                     <div class="col-sm-10">
                                         <select class="form-control" name="departmentName">
                                             <option value="none" selected disabled hidden>Select a Department</option>
-                                            <%  Connection c = (Connection) application.getAttribute("dbConnection");
-                                                String deptName; PreparedStatement ps; ResultSet resultSet;
-                                                ps=c.prepareStatement("select name from departments",ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-                                                resultSet=ps.executeQuery();
-                                                while(resultSet.next()) {
-                                                    deptName=resultSet.getString(1); %>
-                                                    <option value="<%=deptName%>">
-                                                        <%= deptName %>
+                                                <c:forEach items="${departmentController.list}" var="department">
+                                                    <option value="${department.deptName}">
+                                                        ${department.deptName}
                                                     </option>
-                                                <% } %>
+                                                </c:forEach>
                                         </select>
                                     </div>
                                 </div>
