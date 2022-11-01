@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
 
 @WebServlet(urlPatterns = {"/department-add", "/department-edit", "/department-delete"})
 public class DepartmentAction extends HttpServlet {
@@ -37,7 +36,6 @@ public class DepartmentAction extends HttpServlet {
             return;
         }
         department.setId(Long.parseLong(req.getParameter("deptId")));
-        Connection connection = (Connection) servletCtx.getAttribute("dbConnection");
         departmentController.delete(department);
         resp.sendRedirect("./department.jsp");
     }
@@ -52,7 +50,6 @@ public class DepartmentAction extends HttpServlet {
         } catch (Exception ex){
             System.out.println(ex.getMessage());
         }
-        Connection connection = (Connection) servletCtx.getAttribute("dbConnection");
         if (req.getServletPath().equals("/department-add")) {
             if (StringUtils.isBlank(department.getDeptName())) {
                 //add validation here
