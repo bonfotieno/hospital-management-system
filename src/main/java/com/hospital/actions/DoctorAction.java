@@ -37,12 +37,11 @@ public class DoctorAction extends HttpServlet {
             return;
         }
         doctor.setId(Long.parseLong(req.getParameter("id")));
-        doctorController.delete(doctor);
+        this.delete(doctorController);
         resp.sendRedirect("./doctor.jsp");
     }
 
     @Override
-
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (CommonMethods.IsSessionExpired(req, resp)) {
             return;
@@ -77,5 +76,11 @@ public class DoctorAction extends HttpServlet {
             doctorController.update(doctor, req.getParameter("pwd"));
             resp.sendRedirect("./doctor.jsp");
         }
+    }
+
+    @Inject
+    public void delete(DoctorController doctorController){
+        DoctorController dController = doctorController;
+        dController.delete(doctor);
     }
 }
