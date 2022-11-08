@@ -24,7 +24,7 @@
                     </div>
                     <div class="input-group input-group-lg">
                         <span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></span>
-                        <input type="email" class="form-control" name="email" placeholder="example@gmail.com" required aria-describedby="sizing-addon1">
+                        <input type="email" class="form-control" name="username" placeholder="example@gmail.com" required aria-describedby="sizing-addon1">
                     </div>
                     <br/>
                     <div class="input-group input-group-lg">
