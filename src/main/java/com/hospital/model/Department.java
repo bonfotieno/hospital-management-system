@@ -1,7 +1,12 @@
 package com.hospital.model;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "departments")
 public class Department extends BaseEntity {
+    @Column(name = "name")
     private String deptName;
+    @Column(name = "description")
     private String deptDesc;
 
     public String getDeptName() {

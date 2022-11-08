@@ -1,12 +1,12 @@
 package com.hospital.actions;
 
 import com.hospital.common.CommonMethods;
-import com.hospital.controllers.DepartmentController;
+import com.hospital.controllers.DepartmentBean;
 import com.hospital.model.Department;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.inject.Inject;
+import javax.ejb.EJB;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -19,12 +19,9 @@ import java.io.IOException;
 @WebServlet(urlPatterns = {"/department-add", "/department-edit", "/department-delete"})
 public class DepartmentAction extends HttpServlet {
     private final Department department = new Department();
-    private final DepartmentController departmentController;
+    @EJB
+    DepartmentBean departmentBean;
     ServletContext servletCtx = null;
-    @Inject
-    public DepartmentAction(DepartmentController departmentController) {
-        this.departmentController = departmentController;
-    }
     public void init(ServletConfig config) throws ServletException{
         super.init(config);
         servletCtx = config.getServletContext();
@@ -36,7 +33,7 @@ public class DepartmentAction extends HttpServlet {
             return;
         }
         department.setId(Long.parseLong(req.getParameter("deptId")));
-        departmentController.delete(department);
+        departmentBean.delete(department);
         resp.sendRedirect("./department.jsp");
     }
 
@@ -59,12 +56,12 @@ public class DepartmentAction extends HttpServlet {
                 //add validation here
                 return;
             }
-            departmentController.add(department);
+            departmentBean.add(department);
             resp.sendRedirect("./department.jsp");
             return;
         }
         if (req.getServletPath().equals("/department-edit")) {
-            departmentController.update(department);
+            departmentBean.update(department);
             resp.sendRedirect("./department.jsp");
         }
     }

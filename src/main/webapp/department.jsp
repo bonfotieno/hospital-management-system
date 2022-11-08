@@ -1,5 +1,4 @@
 <%@ page isELIgnored="false" %>
-<%@ page import="com.hospital.controllers.DepartmentController" %>
 <%@ page import="com.hospital.model.Department" %>
 <%@ page import="com.hospital.common.CommonMethods" %>
 <%@ page import="java.sql.*" %>
@@ -48,7 +47,7 @@
                          <td>Options</td>
                      </tr>
 
-                    <c:forEach items="${departmentController.list}" var="department">
+                    <c:forEach items="${departmentBean.list}" var="department">
                     <c:set var = "id" value = "${department.id}" />
                         <tr>
                              <td><fmt:formatNumber value = "${id}" type = "number" minFractionDigits = "" /></td>
@@ -69,7 +68,7 @@
               <!----------------   Display Department Data List ends   --------------->
 
               <!------ Edit Department Modal Start ---------->
-              <c:forEach items="${departmentController.list}" var="department">
+              <c:forEach items="${departmentBean.list}" var="department">
                <div class="modal fade" id="myModal${department.id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                      <div class="modal-dialog" role="document">
                          <div class="modal-content">
