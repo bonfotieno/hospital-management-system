@@ -7,8 +7,6 @@
 
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix ="c" %>
 
-<jsp:useBean id="roomController" class="com.hospital.controllers.RoomController" />
-
 <% if (CommonMethods.IsSessionExpired(request, response)) { return; } %>
 
 <jsp:include page="./main_content_header.jsp" />
@@ -39,11 +37,7 @@
                             <td>Availability Status</td>
                             <td>Options</td>
                         </tr>
-                        <%
-                            List<Room> rooms = roomController.list((Connection) application.getAttribute("dbConnection"), new Room());
-                            pageContext.setAttribute("rooms", rooms);
-                        %>
-                        <c:forEach items="${rooms}" var="room">
+                        <c:forEach items="${roomBean.list}" var="room">
                             <tr>
                                 <td>${room.roomNo}</td>
                                 <td>${room.bedNo}</td>
@@ -63,7 +57,7 @@
                 <!----------------   Display Room Data List ends   --------------->
 
                 <!------ Edit Room Modal Start ---------->
-                <c:forEach items="${rooms}" var="room">
+                <c:forEach items="${roomBean.list}" var="room">
                     <div class="modal fade" id="myModal${room.uniqueID}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">

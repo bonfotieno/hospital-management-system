@@ -1,11 +1,13 @@
 package com.hospital.actions;
 
 import com.hospital.common.CommonMethods;
-import com.hospital.controllers.RoomController;
+import com.hospital.controllers.RoomBean;
 import com.hospital.model.Room;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -14,13 +16,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
 
 @WebServlet(urlPatterns = {"/room-add", "/room-edit", "/room-delete"})
 public class RoomAction extends HttpServlet {
     private final Room room = new Room();
     ServletContext servletCtx = null;
-    private final RoomController roomController = new RoomController();
+    @EJB
+    RoomBean roomBean;
     public void init(ServletConfig config) throws ServletException{
         super.init(config);
         servletCtx = config.getServletContext();
@@ -31,8 +33,7 @@ public class RoomAction extends HttpServlet {
             return;
         }
         room.setUniqueID(req.getParameter("uniqueID"));
-        Connection connection = (Connection) servletCtx.getAttribute("dbConnection");
-        roomController.delete(connection, room);
+        roomBean.delete(room);
         resp.sendRedirect("./room.jsp");
     }
 
@@ -47,7 +48,6 @@ public class RoomAction extends HttpServlet {
             System.out.println(ex.getMessage());
         }
         room.setUniqueID(room.getRoomNo()+room.getBedNo());
-        Connection connection = (Connection) servletCtx.getAttribute("dbConnection");
         if (req.getServletPath().equals("/room-add")) {
             if (StringUtils.isBlank(room.getRoomNo())) {
                 //add validation here
@@ -61,12 +61,12 @@ public class RoomAction extends HttpServlet {
                 //add validation here
                 return;
             }
-            roomController.add(connection, room);
+            roomBean.add(room);
             resp.sendRedirect("./room.jsp");
             return;
         }
         if (req.getServletPath().equals("/room-edit")) {
-            roomController.update(connection, room);
+            roomBean.update(room);
             resp.sendRedirect("./room.jsp");
         }
     }

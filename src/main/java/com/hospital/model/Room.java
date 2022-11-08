@@ -1,11 +1,23 @@
 package com.hospital.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
-public class Room implements Serializable {
+@Entity
+@Table(name = "rooms")
+public class Room extends BaseEntity {
+
+    @Column(name = "unique_id", columnDefinition="VARCHAR(64)", unique=true, nullable=false)
     private String uniqueID;
+
+    @Column(name = "room_no")
     private String roomNo;
+
+    @Column(name = "bed_no")
     private String bedNo;
+
+    @Column(name = "room_status")
     private String roomStatus;
 
     public String getUniqueID() {
