@@ -1,11 +1,30 @@
 package com.hospital.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="doctors")
 public class Doctor extends BaseEntity{
+    @Column
     private String name;
+
+    @Column
     private String email;
+
+    @Column
+    private String password;
+
+    @Column
     private String address;
+
+    @Column
     private String phone;
-    private String departmentName;
+
+    @Transient
+    private Long departmentId;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Department department;
 
     public String getName() {
         return name;
@@ -21,6 +40,14 @@ public class Doctor extends BaseEntity{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getAddress() {
@@ -39,12 +66,21 @@ public class Doctor extends BaseEntity{
         this.phone = phone;
     }
 
-    public String getDepartmentName() {
-        return departmentName;
+    public Long getDepartmentId() {
+        return departmentId;
     }
 
-    public void setDepartmentName(String departmentName) {
-        this.departmentName = departmentName;
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
+    }
+
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 }
 

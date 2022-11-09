@@ -39,7 +39,7 @@
                             <td>Department</td>
                             <td>Options</td>
                         </tr>
-                        <c:forEach items="${doctorController.list}" var="doctor">
+                        <c:forEach items="${doctorBean.list}" var="doctor">
                             <tr>
                                 <td>
                                     ${doctor.id}
@@ -57,7 +57,7 @@
                                     ${doctor.phone}
                                 </td>
                                 <td>
-                                    ${doctor.departmentName}
+                                    ${doctor.department.deptName}
                                 </td>
                                 <td>
                                     <a href="#"><button type="button" class="btn btn-primary" data-toggle="modal"
@@ -74,7 +74,7 @@
                 <!----------------   Display Doctor Data List Ends  --------------->
 
                 <!------ Doctor Edit Info Modal Start Here ---------->
-                <c:forEach items="${doctorController.list}" var="doctor">
+                <c:forEach items="${doctorBean.list}" var="doctor">
                 <div class="modal fade" id="myModal${doctor.id}" tabindex="-1" role="dialog"
                     aria-labelledby="myModalLabel">
                     <div class="modal-dialog" role="document">
@@ -118,8 +118,8 @@
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label">Password</label>
                                                 <div class="col-sm-10">
-                                                    <input type="password" class="form-control" name="pwd"
-                                                        value="passwoord_here" placeholder="Password">
+                                                    <input type="password" class="form-control" name="password"
+                                                        value="${doctor.password}" placeholder="Password Here">
                                                 </div>
                                             </div>
 
@@ -144,11 +144,15 @@
                                                 <label class="col-sm-2 control-label">Department</label>
                                                 <div class="col-sm-10">
 
-                                                    <select class="form-control" name="departmentName">
-                                                        <option selected="selected">
-                                                            ${doctor.departmentName}
+                                                    <select class="form-control" name="departmentId">
+                                                        <option value="${doctor.department.id}" selected="selected">
+                                                            ${doctor.department.deptName}
                                                         </option>
-                                                        <option> Neurology</option>
+                                                        <c:forEach items="${departmentBean.list}" var="department">
+                                                            <option value="${department.id}">
+                                                                ${department.deptName}
+                                                            </option>
+                                                        </c:forEach>
                                                     </select>
                                                 </div>
                                             </div>
@@ -197,7 +201,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Password</label>
                                     <div class="col-sm-10">
-                                        <input type="password" class="form-control" name="pwd"
+                                        <input type="password" class="form-control" name="password"
                                             placeholder="Password" required="required">
                                     </div>
                                 </div>
@@ -221,10 +225,10 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Department</label>
                                     <div class="col-sm-10">
-                                        <select class="form-control" name="departmentName">
+                                        <select class="form-control" name="departmentId">
                                             <option value="none" selected disabled hidden>Select a Department</option>
-                                                <c:forEach items="${departmentController.list}" var="department">
-                                                    <option value="${department.deptName}">
+                                                <c:forEach items="${departmentBean.list}" var="department">
+                                                    <option value="${department.id}">
                                                         ${department.deptName}
                                                     </option>
                                                 </c:forEach>
