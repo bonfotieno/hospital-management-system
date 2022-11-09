@@ -1,11 +1,15 @@
 package com.hospital.model;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "departments")
 public class Department extends BaseEntity {
+
     @Column(name = "name")
     private String deptName;
+
     @Column(name = "description")
     private String deptDesc;
 

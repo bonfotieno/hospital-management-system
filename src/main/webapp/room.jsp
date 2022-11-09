@@ -46,7 +46,7 @@
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal${room.uniqueID}">
                                         <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
                                     </button>
-                                    <a href="./room-delete?uniqueID=${room.uniqueID}" class="btn btn-danger" onclick="return confirmDelete()">
+                                    <a href="./room-delete?id=${room.id}" class="btn btn-danger" onclick="return confirmDelete()">
                                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                     </a>
                                 </td>
@@ -64,7 +64,7 @@
 
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
+                                       <span aria-hidden="true">&times;</span>
                                     </button>
                                     <h4 class="modal-title" id="myModalLabel">Edit Room Information</h4>
                                 </div>
@@ -73,7 +73,7 @@
                                     <div class="panel panel-default">
                                         <div class="panel-body">
                                             <form class="form-horizontal" action="./room-edit" method="post">
-                                                <input type="hidden" name="uniqueID" value="${room.uniqueID}">
+                                                <input type="hidden" name="id" value="${room.id}">
 
                                                 <div class="form-group">
                                                     <label class="col-sm-4 control-label">Room No</label>

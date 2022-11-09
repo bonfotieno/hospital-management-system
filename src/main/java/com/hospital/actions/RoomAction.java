@@ -32,6 +32,7 @@ public class RoomAction extends HttpServlet {
         if (CommonMethods.IsSessionExpired(req, resp)) {
             return;
         }
+        room.setId(Long.parseLong(req.getParameter("id")));
         room.setUniqueID(req.getParameter("uniqueID"));
         roomBean.delete(room);
         resp.sendRedirect("./room.jsp");

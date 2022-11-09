@@ -27,13 +27,13 @@ public class RoomBean {
         em.merge(room);
     }
     public void update(Room room){
-        Room rm = em.find(Room.class, room.getUniqueID());
+        Room rm = em.find(Room.class, room.getId());
         rm.setRoomNo(room.getRoomNo());
         rm.setBedNo(room.getBedNo());
         rm.setRoomStatus(room.getRoomStatus());
     }
     public void delete(Room room){
-        Room rm = em.find(Room.class, room.getUniqueID());
+        Room rm = em.find(Room.class, room.getId());
         em.remove(rm);
     }
     public List<Room> getList() {
