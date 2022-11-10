@@ -21,6 +21,7 @@ public class RoomBean {
     @PersistenceContext
     EntityManager em;
     private List<Department> list;
+    private List<Department> groupedList;
     public void add(Room room){
         if (room == null || StringUtils.isBlank(room.getRoomNo()) || StringUtils.isBlank(room.getBedNo()))
             return;
@@ -40,7 +41,15 @@ public class RoomBean {
         return em.createQuery("FROM Room r", Room.class).getResultList();
     }
 
+    public List<Room> getGroupedList() {
+        return em.createQuery("FROM Room r GROUP BY r.roomNo", Room.class).getResultList();
+    }
+
     public void setList(List<Department> list) {
         this.list = list;
+    }
+
+    public void setGroupedList(List<Department> groupedList) {
+        this.groupedList = groupedList;
     }
 }

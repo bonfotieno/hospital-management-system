@@ -1,9 +1,6 @@
 <%@ page isELIgnored="false" %>
 <%@ page import="com.hospital.model.Doctor" %>
 <%@ page import="com.hospital.common.CommonMethods" %>
-<%@ page import="java.sql.*" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.List" %>
 
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix ="c" %>
 
@@ -23,12 +20,12 @@
             <div class="panel-heading">Manage Doctor</div>
             <!----------------   Panel body Start   --------------->
             <div class="panel-body">
-                <ul class="nav nav-tabs doctor">
-                    <li role="presentation"><a href="#doctorlist">Doctor List</a></li>
-                    <li role="presentation"><a href="#adddoctor">Add Doctor</a></li>
+                <ul class="nav nav-tabs panelBodyItem">
+                    <li role="presentation"><a href="#panelBodyItemlist">Doctor List</a></li>
+                    <li role="presentation"><a href="#addpanelBodyItem">Add Doctor</a></li>
                 </ul>
                 <!----------------   Display Doctor Data List Start  --------------->
-                <div id="doctorlist" class="switchgroup">
+                <div id="panelBodyItemlist" class="switchgroup">
                     <table class="table table-bordered table-hover">
                         <tr class="active">
                             <td>Doctor ID</td>
@@ -173,7 +170,7 @@
                 <!----------------   Modal ends here  --------------->
 
                 <!----------------   Add Doctor Start   --------------->
-                <div id="adddoctor" class="switchgroup">
+                <div id="addpanelBodyItem" class="switchgroup">
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <form class="form-horizontal" action="./doctor-add" method="post">
