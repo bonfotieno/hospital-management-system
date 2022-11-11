@@ -237,17 +237,22 @@
                             <td>Nurse Name</td>                            
                             <td>Room To Attend</td>                            
                         </tr>
-                        <c:set var = "rooms" value = "${nurseBean.crossJoinedList}" />
-                        <c:forEach items="${rooms}" var="room">
-                            <tr>                                
-                                <td>
-                                    ${room.nurses.get(1)}
-                                </td>                                
-                                <td>
-                                    ${room.nurses.get(5)}
-                                </td>                                
-                            </tr>
-                        </c:forEach>  
+                        <c:set var="continueExecuting" scope="request" value="false"/>
+                        <c:forEach items="${nurseBean.crossJoinedList}" var="room">
+                            <c:if test="${continueExecuting}">
+                                <c:forEach items="${room.nurses}" var="nurse">
+                                    <tr>
+                                        <td>
+                                            ${nurse.name}
+                                        </td>
+                                        <td>
+                                            ${nurse.room.roomNo}
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </c:if>
+                            <c:set var="continueExecuting" scope="request" value="true"/>
+                        </c:forEach>
                     </table>
                 </div>
                 <!----------------   Cross Join Ends   --------------->
