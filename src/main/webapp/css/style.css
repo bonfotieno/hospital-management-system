@@ -101,10 +101,17 @@ body
 	background-position:fixed;
 	background-repeat:no-repeat;
 }
-#adddoctor
+
+#addpanelBodyItem
 {
 	display:none;
 }
+
+#nurseRoomCrossJoin
+{
+	display:none;
+}
+
 .active
 {
 	background-color:#EEEEEE;

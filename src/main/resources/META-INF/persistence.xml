@@ -7,7 +7,7 @@
       <properties>
           
         <!-- Database connection settings -->
-        <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
+        <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect" />
         <!--<property name="hibernate.dialect" value="com.fms.util.hibernate.CustomMySQLDialect" />-->
         <property name="hibernate.integration.envers.enabled" value="false"/>
         <property name="hibernate.archive.autodetection" value="class, hbm" />
