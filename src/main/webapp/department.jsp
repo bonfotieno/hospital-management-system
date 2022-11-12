@@ -32,13 +32,13 @@
           <div class="panel-heading">Manage Department</div>
           <!----------------   Panel Body Start   --------------->
           <div class="panel-body">
-              <ul class="nav nav-tabs doctor">
-                  <li role="presentation"><a href="#doctorlist">Department List</a></li>
-                  <li role="presentation"><a href="#adddoctor">Add Department</a></li>
+              <ul class="nav nav-tabs panelBodyItem">
+                  <li role="presentation"><a href="#panelBodyItemlist">Department List</a></li>
+                  <li role="presentation"><a href="#addpanelBodyItem">Add Department</a></li>
               </ul>
               <!----------------   Display Department Data List start   --------------->
 
-              <div id="doctorlist" class="switchgroup">
+              <div id="panelBodyItemlist" class="switchgroup">
                 <table class="table table-bordered table-hover">
                      <tr class="active">
                          <td>Department ID</td>
@@ -118,7 +118,7 @@
               <!----------------   Modal ends here  --------------->
 
               <!----------------   Add Department Start   --------------->
-              <div id="adddoctor" class="switchgroup">
+              <div id="addpanelBodyItem" class="switchgroup">
                   <div class="panel panel-default">
                       <div class="panel-body">
                           <form class="form-horizontal" action="./department-add" method="post">
