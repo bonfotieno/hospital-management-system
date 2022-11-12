@@ -14,11 +14,11 @@
       <script src="js/jquery.js"></script>
       <script type="text/javascript">
           $(document).ready(function () {
-              $('#doctorlist').show();
-              $('.doctor li:first-child a').addClass('active');
-              $('.doctor li a').click(function (e) {
+              $('#panelBodyItemlist').show();
+              $('.panelBodyItem li:first-child a').addClass('active');
+              $('.panelBodyItem li a').click(function (e) {
                   var tabDiv = this.hash;
-                  $('.doctor li a').removeClass('active');
+                  $('.panelBodyItem li a').removeClass('active');
                   $(this).addClass('.active');
                   $('.switchgroup').hide();
                   $(tabDiv).fadeIn();
