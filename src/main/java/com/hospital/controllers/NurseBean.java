@@ -47,24 +47,16 @@ public class NurseBean implements NurseBeanI, Serializable {
     }
 
     public List<Room> getCrossJoinedList() {
-//        Query query = em.createQuery("select n.name, r.roomNo from Nurse n "
-//                + "CROSS JOIN r.room r");
+//        Query query = em.createQuery("select n.name, r.roomNo from Nurse n CROSS JOIN r.room r");
 //        return query.getResultList();
 
-//        from Company as comp, Employee as emp
-
-//        TypedQuery<Room> query
-//                = em.createQuery(
-//                "SELECT r FROM Nurse n, n.room r", Room.class);
-//        List<Room> resultList = query.getResultList();
-//        System.out.println("\n\n"+resultList+"\n\n");
-//        return resultList;
+//        "from Company as comp, Employee as emp"
 
         TypedQuery<Room> query
                 = em.createQuery(
-                "SELECT r FROM Nurse n INNER JOIN n.room r", Room.class);
+                "SELECT r FROM Nurse n, Room r", Room.class);
         List<Room> resultList = query.getResultList();
-        System.out.println("\n\n"+resultList+"\n\n");
+//        System.out.println("\n\n"+resultList+"\n\n");
         return resultList;
     }
 
@@ -72,8 +64,6 @@ public class NurseBean implements NurseBeanI, Serializable {
         TypedQuery<Room> query
                 = em.createQuery(
                 "SELECT r FROM Nurse n INNER JOIN n.room r", Room.class);
-        List<Room> resultList = query.getResultList();
-        System.out.println("\n\n"+resultList+"\n\n");
-        return resultList;
+        return query.getResultList();
     }
 }

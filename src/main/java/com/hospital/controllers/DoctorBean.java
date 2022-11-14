@@ -30,8 +30,6 @@ public class DoctorBean implements DoctorBeanI, Serializable {
         Department department = em.createQuery("FROM Department r WHERE r.id = :departmentId", Department.class)
                 .setParameter("departmentId", doctor.getDepartmentId())
                 .getSingleResult();
-        if(doctor.getId()==null)
-            System.out.println(doctor.getPassword());
         doctor.setDepartment(department);
         em.merge(doctor);
     }
