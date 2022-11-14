@@ -1,12 +1,14 @@
 package com.hospital.model;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "rooms")
-public class Room extends BaseEntity {
+public class Room extends BaseEntity implements Serializable {
 
     @Column(name = "unique_id", columnDefinition="VARCHAR(64)", unique=true, nullable=false)
     private String uniqueID;
@@ -21,7 +23,7 @@ public class Room extends BaseEntity {
     private String roomStatus;
 
     @OneToMany(mappedBy = "room", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Nurse> nurses = new ArrayList<Nurse>();
+    private List<Nurse> nurses;
 
     public String getUniqueID() {
         return uniqueID;
@@ -55,6 +57,7 @@ public class Room extends BaseEntity {
         this.roomStatus = roomStatus;
     }
 
+    @JsonbTransient
     public List<Nurse> getNurses() {
         return nurses;
     }
