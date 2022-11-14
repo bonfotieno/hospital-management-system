@@ -6,9 +6,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+
+@NamedQueries({
+        @NamedQuery(name = Room.FIND_ALL, query = "SELECT r FROM Room r"),
+        @NamedQuery(name = Room.FIND_WITH_ID, query = "SELECT r FROM Room r WHERE r.id=:Id"),
+})
+
 @Entity
 @Table(name = "rooms")
 public class Room extends BaseEntity implements Serializable {
+
+    public static final String FIND_ALL = "Room.findAll";
+    public static final String FIND_WITH_ID = "Room.findWithId";
 
     @Column(name = "unique_id", columnDefinition="VARCHAR(64)", unique=true, nullable=false)
     private String uniqueID;
