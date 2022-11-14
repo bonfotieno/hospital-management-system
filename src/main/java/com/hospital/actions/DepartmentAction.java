@@ -2,6 +2,7 @@ package com.hospital.actions;
 
 import com.hospital.common.CommonMethods;
 import com.hospital.controllers.DepartmentBean;
+import com.hospital.controllers.DepartmentBeanI;
 import com.hospital.model.Department;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -20,7 +21,7 @@ import java.io.IOException;
 public class DepartmentAction extends HttpServlet {
     private final Department department = new Department();
     @EJB
-    DepartmentBean departmentBean;
+    DepartmentBeanI departmentBean;
     ServletContext servletCtx = null;
     public void init(ServletConfig config) throws ServletException{
         super.init(config);

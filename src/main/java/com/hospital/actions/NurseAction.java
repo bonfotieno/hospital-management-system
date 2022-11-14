@@ -2,6 +2,7 @@ package com.hospital.actions;
 
 import com.hospital.common.CommonMethods;
 import com.hospital.controllers.NurseBean;
+import com.hospital.controllers.NurseBeanI;
 import com.hospital.model.Nurse;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -23,7 +24,7 @@ public class NurseAction extends HttpServlet {
     ServletContext servletCtx = null;
 
     @EJB
-    NurseBean nurseBean;
+    NurseBeanI nurseBean;
 
     public void init(ServletConfig config) throws ServletException {
         super.init(config);

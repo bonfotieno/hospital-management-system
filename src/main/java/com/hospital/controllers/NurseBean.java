@@ -11,15 +11,15 @@ import javax.ejb.TransactionManagementType;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.io.Serializable;
 import java.util.List;
 
 @Named("nurseBean")
 @Stateless
 @Remote
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class NurseBean {
+public class NurseBean implements NurseBeanI, Serializable {
 
     @PersistenceContext
     EntityManager em;
@@ -51,12 +51,29 @@ public class NurseBean {
 //                + "CROSS JOIN r.room r");
 //        return query.getResultList();
 
+//        from Company as comp, Employee as emp
+
+//        TypedQuery<Room> query
+//                = em.createQuery(
+//                "SELECT r FROM Nurse n, n.room r", Room.class);
+//        List<Room> resultList = query.getResultList();
+//        System.out.println("\n\n"+resultList+"\n\n");
+//        return resultList;
+
         TypedQuery<Room> query
                 = em.createQuery(
                 "SELECT r FROM Nurse n INNER JOIN n.room r", Room.class);
         List<Room> resultList = query.getResultList();
         System.out.println("\n\n"+resultList+"\n\n");
+        return resultList;
+    }
 
+    public List<Room> getInnerJoinedLIst(){
+        TypedQuery<Room> query
+                = em.createQuery(
+                "SELECT r FROM Nurse n INNER JOIN n.room r", Room.class);
+        List<Room> resultList = query.getResultList();
+        System.out.println("\n\n"+resultList+"\n\n");
         return resultList;
     }
 }

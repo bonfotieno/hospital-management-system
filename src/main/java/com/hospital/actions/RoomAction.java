@@ -2,6 +2,7 @@ package com.hospital.actions;
 
 import com.hospital.common.CommonMethods;
 import com.hospital.controllers.RoomBean;
+import com.hospital.controllers.RoomBeanI;
 import com.hospital.model.Room;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -22,7 +23,7 @@ public class RoomAction extends HttpServlet {
     private final Room room = new Room();
     ServletContext servletCtx = null;
     @EJB
-    RoomBean roomBean;
+    RoomBeanI roomBean;
     public void init(ServletConfig config) throws ServletException{
         super.init(config);
         servletCtx = config.getServletContext();

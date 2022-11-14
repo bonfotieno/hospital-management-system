@@ -18,7 +18,7 @@ import java.util.List;
 @Stateless
 @Remote
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class DepartmentBean implements Serializable {
+public class DepartmentBean implements DepartmentBeanI, Serializable {
 
     @PersistenceContext
     EntityManager em;
@@ -49,7 +49,7 @@ public class DepartmentBean implements Serializable {
     }
 }
 
-/* Getting name
+/* Getting deptName from jsp
 *
 * <%  Connection c = (Connection) application.getAttribute("dbConnection");
     String deptName; PreparedStatement ps; ResultSet resultSet;

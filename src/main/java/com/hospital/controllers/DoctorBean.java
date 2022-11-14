@@ -11,6 +11,7 @@ import javax.ejb.TransactionManagementType;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -18,7 +19,7 @@ import java.util.List;
 @Stateless
 @Remote
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class DoctorBean {
+public class DoctorBean implements DoctorBeanI, Serializable {
 
     @PersistenceContext
     EntityManager em;

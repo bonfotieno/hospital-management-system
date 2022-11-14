@@ -1,15 +1,14 @@
 package com.hospital.actions;
 
 import com.hospital.controllers.AuthBean;
+import com.hospital.controllers.AuthBeanI;
 import com.hospital.model.Admin;
 import com.hospital.model.Auth;
 import com.hospital.model.Patient;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.codec.digest.DigestUtils;
 
-import javax.annotation.Resource;
 import javax.ejb.EJB;
-import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -19,14 +18,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.sql.DataSource;
+
 import java.io.IOException;
 import java.util.Date;
 
 @WebServlet(urlPatterns = "/login")
 public class LoginAction extends HttpServlet {
     @EJB
-    AuthBean authBean;
+    AuthBeanI authBean;
     ServletContext servletCtx = null;
     public void init(ServletConfig config) throws ServletException{
         super.init(config);

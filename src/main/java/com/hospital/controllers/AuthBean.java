@@ -11,12 +11,13 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.io.Serializable;
 import java.util.List;
 
 @Stateless
 @Remote
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class AuthBean {
+public class AuthBean implements AuthBeanI, Serializable {
     @PersistenceContext
     EntityManager em;
     public Admin loginAdmin(Auth auth) throws Exception {
@@ -35,7 +36,6 @@ public class AuthBean {
 
         return auths.get(0).getAdmin();
     }
-
 
     public Patient loginPatient(String email, String password) {
 
