@@ -29,6 +29,14 @@ public class Nurse extends BaseEntity{
     @Transient
     private Long roomId;
 
+    public String getRoomNo() {
+        return roomNo;
+    }
+
+    public void setRoomNo(String roomNo) {
+        this.roomNo = roomNo;
+    }
+
     @Transient
     private String roomNo;
 

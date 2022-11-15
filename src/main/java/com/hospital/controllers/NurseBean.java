@@ -65,7 +65,7 @@ public class NurseBean implements NurseBeanI, Serializable {
     public List<Nurse> getLeftJoinedLIst(){
         TypedQuery<Nurse> query
                 = em.createQuery(
-                "SELECT new Nurse(n.name, r.roomNo) FROM Nurse n LEFT JOIN n.room r", Nurse.class);
+                "SELECT new Nurse(n.name, r.roomNo) FROM Nurse n LEFT OUTER JOIN n.room r", Nurse.class);
         return query.getResultList();
     }
 
