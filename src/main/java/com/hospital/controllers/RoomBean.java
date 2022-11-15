@@ -40,7 +40,7 @@ public class RoomBean implements RoomBeanI, Serializable {
     }
 
     public List<Room> getList() {
-        return em.createQuery(Room.FIND_ALL, Room.class).getResultList();
+        return em.createQuery("FROM Room r", Room.class).getResultList();
     }
 
     public List<Room> getGroupedList() {
