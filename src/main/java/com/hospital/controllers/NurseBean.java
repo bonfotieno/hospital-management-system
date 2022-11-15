@@ -46,24 +46,34 @@ public class NurseBean implements NurseBeanI, Serializable {
         return em.createQuery("FROM Nurse n ORDER BY n.email", Nurse.class).getResultList();
     }
 
-    public List<Room> getCrossJoinedList() {
+    public List<Nurse> getCrossJoinedList() {
 //        Query query = em.createQuery("select n.name, r.roomNo from Nurse n CROSS JOIN r.room r");
 //        return query.getResultList();
 
+//        em.createQuery("SELECT o FROM Order o join o.vehicle v where o.vehicle.id!=v.id", Order.class);
 //        "from Company as comp, Employee as emp"
+//        "SELECT r FROM Nurse n, Room r", Room.class);
 
-        TypedQuery<Room> query
+        TypedQuery<Nurse> query
                 = em.createQuery(
-                "SELECT r FROM Nurse n, Room r", Room.class);
-        List<Room> resultList = query.getResultList();
-//        System.out.println("\n\n"+resultList+"\n\n");
+                "SELECT n FROM Room r, Nurse n", Nurse.class);
+        List<Nurse> resultList = query.getResultList();
+        System.out.println("\n\n"+resultList.get(1)+"\n\n");
         return resultList;
     }
 
-    public List<Room> getInnerJoinedLIst(){
-        TypedQuery<Room> query
+    public List<Nurse> getLeftJoinedLIst(){
+        TypedQuery<Nurse> query
                 = em.createQuery(
-                "SELECT r FROM Nurse n INNER JOIN n.room r", Room.class);
+                "SELECT new Nurse(n.name, r.roomNo) FROM Nurse n LEFT JOIN n.room r", Nurse.class);
         return query.getResultList();
     }
+
+    public List<Nurse> getCrossedLIst(){
+        TypedQuery<Nurse> query
+                = em.createQuery(
+                "SELECT n FROM Room r, Nurse n WHERE n.room.roomNo = r.roomNo", Nurse.class);
+        return query.getResultList();
+    }
+
 }

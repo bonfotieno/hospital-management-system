@@ -15,5 +15,9 @@ public interface NurseBeanI {
 
     List<Nurse> getList();
 
-    List<Room> getCrossJoinedList();
+    List<Nurse> getCrossJoinedList();
+
+    List<Nurse> getLeftJoinedLIst();
+
+    List<Nurse> getCrossedLIst();
 }

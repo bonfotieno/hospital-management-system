@@ -6,6 +6,14 @@ import javax.persistence.*;
 @Table(name = "nurses")
 public class Nurse extends BaseEntity{
 
+    public Nurse() {
+    }
+
+    public Nurse(String name, String roomNo) {
+        this.name = name;
+        this.roomNo = roomNo;
+    }
+
     @Column
     private String name;
 
@@ -20,6 +28,9 @@ public class Nurse extends BaseEntity{
 
     @Transient
     private Long roomId;
+
+    @Transient
+    private String roomNo;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Room room;
@@ -70,5 +81,10 @@ public class Nurse extends BaseEntity{
 
     public void setRoom(Room room) {
         this.room = room;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 }

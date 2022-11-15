@@ -237,21 +237,16 @@
                             <td>Nurse Name</td>                            
                             <td>Room To Attend</td>                            
                         </tr>
-                        <c:set var="continueExecuting" scope="request" value="false"/>
-                        <c:forEach items="${nurseBean.crossJoinedList}" var="room">
-                            <c:if test="${continueExecuting}">
-                                <c:forEach items="${room.nurses}" var="nurse">
-                                    <tr>
-                                        <td>
-                                            ${nurse.name}
-                                        </td>
-                                        <td>
-                                            ${nurse.room.roomNo}
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                            </c:if>
-                            <c:set var="continueExecuting" scope="request" value="true"/>
+
+                        <c:forEach items="${nurseBean.leftJoinedLIst}" var="nurse">
+                            <tr>
+                                <td>
+                                    ${nurse.name}
+                                </td>
+                                <td>
+                                    ${nurse.roomNo}
+                                </td>
+                            </tr>
                         </c:forEach>
                     </table>
                 </div>
