@@ -15,6 +15,8 @@ import javax.persistence.TypedQuery;
 import java.io.Serializable;
 import java.util.List;
 
+
+
 @Named("nurseBean")
 @Stateless
 @Remote
@@ -65,7 +67,7 @@ public class NurseBean implements NurseBeanI, Serializable {
     public List<Nurse> getLeftJoinedLIst(){
         TypedQuery<Nurse> query
                 = em.createQuery(
-                "SELECT new Nurse(n.name, r.roomNo) FROM Nurse n LEFT OUTER JOIN n.room r", Nurse.class);
+                "SELECT new Nurse(n.name, r.roomNo) FROM Nurse n RIGHT OUTER JOIN n.room r", Nurse.class);
         return query.getResultList();
     }
 

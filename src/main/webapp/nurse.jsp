@@ -23,7 +23,7 @@
                 <ul class="nav nav-tabs panelBodyItem">
                     <li role="presentation"><a href="#panelBodyItemlist">Nurse List</a></li>
                     <li role="presentation"><a href="#addpanelBodyItem">Add Nurse</a></li>
-                    <li role="presentation"><a href="#nurseRoomCrossJoin">Nurse Room Cross Join</a></li>
+                    <li role="presentation"><a href="#nurseRoomCrossJoin">Nurse Room Joins</a></li>
                 </ul>
 
                 <!----------------   Display Nurse Data List Start  --------------->
