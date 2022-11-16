@@ -9,7 +9,7 @@
           <li role="presentation"><a href="#"><span class="glyphicon glyphicon-user"></span> Patients</a></li>
           <li role="presentation"><a href="nurse.jsp"><span class="glyphicon glyphicon-queen"></span> Nurse</a></li>
           <li role="presentation"><a href="room.jsp"><span class="glyphicon glyphicon-bed"></span> Room</a></li>
-          <li role="presentation"><a href="#"><span class="glyphicon glyphicon-scale"></span> Pathology</a></li>
+          <li role="presentation"><a href="pathology.jsp"><span class="glyphicon glyphicon-scale"></span> Pathology</a></li>
           <li role="presentation"><a href="#"><span class="glyphicon glyphicon-tint"></span> Blood Donor</a></li>
           <li role="presentation"><a href="#"><span class="glyphicon glyphicon-usd"></span> Billing</a></li>
           <li role="presentation"><a href="#"><span class="glyphicon glyphicon-search"></span> Search</a></li>
