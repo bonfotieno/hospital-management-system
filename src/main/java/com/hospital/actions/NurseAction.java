@@ -1,7 +1,6 @@
 package com.hospital.actions;
 
 import com.hospital.common.CommonMethods;
-import com.hospital.controllers.NurseBean;
 import com.hospital.controllers.NurseBeanI;
 import com.hospital.model.Nurse;
 import org.apache.commons.beanutils.BeanUtils;
