@@ -14,6 +14,9 @@ public class Auth extends BaseEntity{
     @Transient
     private String confirmPassword;
 
+    @Transient
+    private String userRole;
+
     @Column
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -21,7 +24,8 @@ public class Auth extends BaseEntity{
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Admin admin;
 
-    // private Patient user;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Patient patient;
 
     public String getUsername() {
         return username;
@@ -55,11 +59,27 @@ public class Auth extends BaseEntity{
         this.status = status;
     }
 
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
+    }
+
     public Admin getAdmin() {
         return admin;
     }
 
     public void setAdmin(Admin admin) {
         this.admin = admin;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 }

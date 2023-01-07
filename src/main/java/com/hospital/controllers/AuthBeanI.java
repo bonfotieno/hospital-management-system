@@ -7,5 +7,5 @@ import com.hospital.model.Patient;
 public interface AuthBeanI {
     Admin loginAdmin(Auth auth) throws Exception;
 
-    Patient loginPatient(String email, String password);
+    Patient loginPatient(Auth auth) throws Exception;
 }
