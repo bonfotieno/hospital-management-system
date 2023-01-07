@@ -1,5 +1,4 @@
 <%@ page isELIgnored="false" %>
-<%@ page import="com.hospital.model.Doctor" %>
 <%@ page import="com.hospital.common.CommonMethods" %>
 
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix ="c" %>
@@ -42,7 +41,7 @@
                                     ${doctor.id}
                                 </td>
                                 <td>
-                                    ${doctor.name}
+                                    Dr. ${doctor.name}
                                 </td>
                                 <td>
                                     ${doctor.email}
@@ -88,7 +87,7 @@
                                     <div class="panel-body">
                                         <form class="form-horizontal" action="./doctor-edit" method="post">
                                             <div class="form-group">
-                                                <label class="col-sm-2 control-label">Doctor Id:</label>
+                                                <label class="col-sm-2 control-label">Doctor Id</label>
                                                 <div class="col-sm-10">
                                                     <input type="number" class="form-control" name="id"
                                                         placeholder="Doctor ID" value="${doctor.id}"
@@ -174,30 +173,24 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <form class="form-horizontal" action="./doctor-add" method="post">
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Doctor Id:</label>
-                                    <div class="col-sm-10">
-                                        <input type="number" class="form-control" name="id"
-                                            placeholder="Doctor ID Auto Generated" readonly>
-                                    </div>
-                                </div>
+                                
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Name</label>
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-6">
                                         <input type="text" class="form-control" name="name"
                                             placeholder="Name" required="required">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Email</label>
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-6">
                                         <input type="email" class="form-control" name="email"
                                             placeholder="Email" required="required">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Password</label>
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-6">
                                         <input type="password" class="form-control" name="password"
                                             placeholder="Password" required="required">
                                     </div>
@@ -205,7 +198,7 @@
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Address</label>
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-6">
                                         <input type="text" class="form-control" name="address" placeholder="Address"
                                             required="required">
                                     </div>
@@ -213,7 +206,7 @@
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Phone</label>
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-6">
                                         <input type="text" class="form-control" name="phone"
                                             placeholder="Phone No." required="required">
                                     </div>
@@ -221,7 +214,7 @@
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Department</label>
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-6">
                                         <select class="form-control" name="departmentId">
                                             <option value="none" selected disabled hidden>Select a Department</option>
                                                 <c:forEach items="${departmentBean.list}" var="department">

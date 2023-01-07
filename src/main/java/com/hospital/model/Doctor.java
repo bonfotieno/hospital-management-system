@@ -23,7 +23,7 @@ public class Doctor extends BaseEntity{
     @Transient
     private Long departmentId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Department department;
 
     public String getName() {
