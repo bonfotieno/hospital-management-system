@@ -3,5 +3,31 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
+  <!-- SMTP settings -->
+  <context-param>
+    <param-name>host</param-name>
+    <param-value>smtp.gmail.com</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>port</param-name>
+    <param-value>25</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>port</param-name>
+    <param-value>587</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>user</param-name>
+    <param-value>bonnyotieno9@gmail.com</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>pass</param-name>
+    <param-value>arqfyvaibyatcbdv</param-value>
+  </context-param>
+
   <display-name>Archetype Created Web Application</display-name>
 </web-app>
