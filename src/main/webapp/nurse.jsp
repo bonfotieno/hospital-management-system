@@ -1,5 +1,4 @@
 <%@ page isELIgnored="false" %>
-<%@ page import="com.hospital.model.Nurse" %>
 <%@ page import="com.hospital.common.CommonMethods" %>
 
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix ="c" %>
@@ -94,7 +93,7 @@
 
                                                 <div class="form-group">
                                                     <label class="col-sm-4 control-label">Nurse Id</label>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-6">
                                                         <input type="number" class="form-control" name="id"
                                                             value="${nurse.id}" readonly="readonly">
                                                     </div>
@@ -102,7 +101,7 @@
 
                                                 <div class="form-group">
                                                     <label class="col-sm-4 control-label">Name</label>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-6">
                                                         <input type="text" class="form-control" name="name"
                                                             value="${nurse.name}">
                                                     </div>
@@ -110,7 +109,7 @@
 
                                                 <div class="form-group">
                                                     <label class="col-sm-4 control-label">Email</label>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-6">
                                                         <input type="text" class="form-control" name="email"
                                                             value="${nurse.email}">
                                                     </div>
@@ -118,14 +117,14 @@
 
                                                 <div class="form-group">
                                                     <label class="col-sm-4 control-label">Address</label>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-6">
                                                         <input type="text" class="form-control" name="address" value="${nurse.address}">
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group">
                                                     <label class="col-sm-4 control-label">Phone</label>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-6">
                                                         <input type="text" class="form-control" name="phone"
                                                             value="${nurse.phone}">
                                                     </div>
@@ -133,7 +132,7 @@
 
                                                 <div class="form-group">
                                                     <label class="col-sm-4 control-label">Room To Attend</label>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-6">
                                                         <select class="form-control" name="roomId">
                                                             <option value="${nurse.room.id}" selected="selected" disabled hidden>
                                                                 ${nurse.room.roomNo}
@@ -170,44 +169,36 @@
                             <form class="form-horizontal" action="./nurse-add" method="POST">
 
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">Nurse Id:</label>
-                                    <div class="col-sm-10">
-                                        <input type="number" class="form-control" name="id"
-                                            placeholder="Nurse ID auto generated" readonly>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
                                     <label class="col-sm-2 control-label">Name</label>
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-6">
                                         <input type="text" class="form-control" name="name" placeholder="Name">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Email</label>
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-6">
                                         <input type="Email" class="form-control" name="email" placeholder="Email">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Address</label>
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-6">
                                         <input type="text" class="form-control" name="address" placeholder="Address">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Phone</label>
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-6">
                                         <input type="text" class="form-control" name="phone" placeholder="Phone No.">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Room To Attend</label>
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-6">
                                         <select class="form-control" name="roomId">
                                             <option value="none" selected disabled hidden>Select a Room Number</option>
                                             <c:forEach items="${roomBean.list}" var="room">

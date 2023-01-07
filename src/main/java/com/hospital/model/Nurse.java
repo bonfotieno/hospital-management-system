@@ -1,5 +1,6 @@
 package com.hospital.model;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 
 @Entity
@@ -40,8 +41,9 @@ public class Nurse extends BaseEntity{
     @Transient
     private String roomNo;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Room room;
+
 
     public String getName() {
         return name;
@@ -92,6 +94,7 @@ public class Nurse extends BaseEntity{
     }
 
     @Override
+    @JsonbTransient
     public String toString() {
         return super.toString();
     }

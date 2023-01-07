@@ -16,7 +16,6 @@ import java.io.Serializable;
 import java.util.List;
 
 
-
 @Named("nurseBean")
 @Stateless
 @Remote
