@@ -1,4 +1,5 @@
 package com.hospital.model;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,9 @@ public class Department extends BaseEntity {
 
     @Column(name = "description")
     private String deptDesc;
+
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
+    private List<Doctor> doctors = new ArrayList<Doctor>();
 
     public String getDeptName() {
         return deptName;
@@ -27,5 +31,14 @@ public class Department extends BaseEntity {
 
     public void setDeptDesc(String deptDesc) {
         this.deptDesc = deptDesc;
+    }
+
+    @JsonbTransient
+    public List<Doctor> getDoctors() {
+        return doctors;
+    }
+
+    public void setDoctors(List<Doctor> doctors) {
+        this.doctors = doctors;
     }
 }

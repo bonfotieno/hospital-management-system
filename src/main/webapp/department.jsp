@@ -83,22 +83,22 @@
                                              <!----- <input type="hidden" name="id" value="${department.id}"> ---->
                                              <div class="form-group">
                                                  <label class="col-sm-4 control-label">Department ID</label>
-                                                 <div class="col-sm-4">
+                                                 <div class="col-sm-6">
                                                      <input type="number" class="form-control" name="id" value="${department.id}" readonly="readonly">
                                                  </div>
                                              </div>
      
                                              <div class="form-group">
                                                  <label class="col-sm-4 control-label">Department Name</label>
-                                                 <div class="col-sm-4">
+                                                 <div class="col-sm-6">
                                                      <input type="text" class="form-control" name="deptName" value="${department.deptName}">
                                                  </div>
                                              </div>
         
                                              <div class="form-group">
                                                  <label class="col-sm-4 control-label">Department Description</label>
-                                                 <div class="col-sm-4">
-                                                     <input type="text" class="form-control" name="deptDesc" value="${department.deptDesc}">
+                                                 <div class="col-sm-6">
+                                                    <textarea class="form-control" name="deptDesc" rows="4" required="required">${department.deptDesc}</textarea>
                                                  </div>
                                              </div>
         
@@ -132,14 +132,14 @@
                               <div class="form-group">
                                   <label class="col-sm-4 control-label">Department Name</label>
                                   <div class="col-sm-4">
-                                      <input type="text" class="form-control" name="deptName" placeholder="Enter Department Name">
+                                      <input type="text" class="form-control" name="deptName" placeholder="Enter Department Name" required="required">
                                   </div>
                               </div>
 
                               <div class="form-group">
                                   <label class="col-sm-4 control-label">Department Description</label>
-                                  <div class="col-sm-4">
-                                      <input type="text" class="form-control" name="deptDesc" placeholder="Enter Department Description here...">
+                                  <div class="col-sm-4">                                      
+                                      <textarea class="form-control" name="deptDesc" placeholder="Enter Department Description here..." rows="4" required="required"></textarea>
                                   </div>
                               </div>
                               <div class="form-group">
