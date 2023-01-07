@@ -36,6 +36,9 @@
         <property name="hibernate.flushMode" value="FLUSH_AUTO" />
 
         <!--<property name="hibernate.globally_quoted_identifiers" value="true"/>-->
+
+        <!-- Enable lazy Loading -->
+        <property name="hibernate.enable_lazy_load_no_trans" value="true" />
          
       </properties>
    </persistence-unit>
