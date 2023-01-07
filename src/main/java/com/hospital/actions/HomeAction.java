@@ -13,6 +13,12 @@ public class HomeAction extends HttpServlet {
         res.sendRedirect("./department.jsp");
     }
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        res.sendRedirect("./department.jsp");
+        
+        if (req.getParameter("userrole").equals("admin")) {
+            res.sendRedirect("./department.jsp");
+        }else {
+            res.sendRedirect("./patient_page.jsp");
+        }
+
     }
 }
