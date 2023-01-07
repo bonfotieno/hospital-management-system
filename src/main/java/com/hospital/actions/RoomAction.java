@@ -1,14 +1,12 @@
 package com.hospital.actions;
 
 import com.hospital.common.CommonMethods;
-import com.hospital.controllers.RoomBean;
 import com.hospital.controllers.RoomBeanI;
 import com.hospital.model.Room;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.ejb.EJB;
-import javax.inject.Inject;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -34,7 +32,6 @@ public class RoomAction extends HttpServlet {
             return;
         }
         room.setId(Long.parseLong(req.getParameter("id")));
-        room.setUniqueID(req.getParameter("uniqueID"));
         roomBean.delete(room);
         resp.sendRedirect("./room.jsp");
     }
@@ -49,17 +46,16 @@ public class RoomAction extends HttpServlet {
         } catch (Exception ex){
             System.out.println(ex.getMessage());
         }
-        room.setUniqueID(room.getRoomNo()+room.getBedNo());
         if (req.getServletPath().equals("/room-add")) {
             if (StringUtils.isBlank(room.getRoomNo())) {
                 //add validation here
                 return;
             }
-            if (StringUtils.isBlank(room.getBedNo())) {
+            if (StringUtils.isBlank(room.getRoomStatus())) {
                 //add validation here
                 return;
             }
-            if (StringUtils.isBlank(room.getRoomStatus())) {
+            if (StringUtils.isBlank(room.getRoomDescription())) {
                 //add validation here
                 return;
             }

@@ -22,7 +22,7 @@ public class RoomBean implements RoomBeanI, Serializable {
     EntityManager em;
 
     public void add(Room room){
-        if (room == null || StringUtils.isBlank(room.getRoomNo()) || StringUtils.isBlank(room.getBedNo()))
+        if (room == null || StringUtils.isBlank(room.getRoomNo()) || StringUtils.isBlank(room.getRoomStatus()))
             return;
         em.merge(room);
     }
@@ -30,8 +30,8 @@ public class RoomBean implements RoomBeanI, Serializable {
     public void update(Room room){
         Room rm = em.find(Room.class, room.getId());
         rm.setRoomNo(room.getRoomNo());
-        rm.setBedNo(room.getBedNo());
         rm.setRoomStatus(room.getRoomStatus());
+        rm.setRoomDescription(room.getRoomDescription());
     }
 
     public void delete(Room room){

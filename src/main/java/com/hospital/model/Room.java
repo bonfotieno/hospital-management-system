@@ -19,28 +19,23 @@ public class Room extends BaseEntity implements Serializable {
     public static final String FIND_ALL = "Room.findAll";
     public static final String FIND_WITH_ID = "Room.findWithId";
 
-    @Column(name = "unique_id", columnDefinition="VARCHAR(64)", unique=true, nullable=false)
-    private String uniqueID;
-
     @Column(name = "room_no")
     private String roomNo;
-
-    @Column(name = "bed_no")
-    private String bedNo;
 
     @Column(name = "room_status")
     private String roomStatus;
 
-    @OneToMany(mappedBy = "room", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Column(name = "room_description")
+    private String roomDescription;
+
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+    private List<Bed> beds;
+
+    @OneToMany(mappedBy = "roomAdmitted", cascade = CascadeType.ALL)
+    private List<Patient> patients;
+
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<Nurse> nurses;
-
-    public String getUniqueID() {
-        return uniqueID;
-    }
-
-    public void setUniqueID(String uniqueID) {
-        this.uniqueID = uniqueID;
-    }
 
     public String getRoomNo() {
         return roomNo;
@@ -50,20 +45,48 @@ public class Room extends BaseEntity implements Serializable {
         this.roomNo = roomNo;
     }
 
-    public String getBedNo() {
-        return bedNo;
-    }
-
-    public void setBedNo(String bedNo) {
-        this.bedNo = bedNo;
-    }
-
     public String getRoomStatus() {
         return roomStatus;
     }
 
     public void setRoomStatus(String roomStatus) {
         this.roomStatus = roomStatus;
+    }
+
+    public String getRoomDescription() {
+        return roomDescription;
+    }
+
+    public void setRoomDescription(String roomDescription) {
+        this.roomDescription = roomDescription;
+    }
+
+    @JsonbTransient
+    public List<Bed> getBeds() {
+        return beds;
+    }
+
+    public void setBeds(List<Bed> beds) {
+        this.beds = beds;
+    }
+
+    public void addBed(Bed bed){
+        bed.setRoom(this);
+        getBeds().add(bed);
+    }
+
+    @JsonbTransient
+    public List<Patient> getPatients() {
+        return patients;
+    }
+
+    public void setPatients(List<Patient> patients) {
+        this.patients = patients;
+    }
+
+    public void addPatient(Patient patient){
+        patient.setRoomAdmitted(this);
+        getPatients().add(patient);
     }
 
     @JsonbTransient
