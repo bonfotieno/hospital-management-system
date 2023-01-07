@@ -15,7 +15,7 @@
                     <div class="input-group input-group-lg">
                         <span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
                         <select class="form-control" name="userrole">
-                            <option selected="selected">Select User</option>
+                            <option value="none" selected="selected" hidden>Select User</option>
                             <option value="admin">Admin</option>
                             <option value="patient">Patient</option>
                         </select>
@@ -24,12 +24,12 @@
                     </div>
                     <div class="input-group input-group-lg">
                         <span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></span>
-                        <input type="email" class="form-control" name="username" placeholder="example@gmail.com" required aria-describedby="sizing-addon1">
+                        <input type="email" maxlength="200" class="form-control" name="username" placeholder="example@gmail.com" required aria-describedby="sizing-addon1">
                     </div>
                     <br/>
                     <div class="input-group input-group-lg">
                         <span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
-                        <input type="password" name="password" class="form-control" placeholder="Password" required aria-describedby="sizing-addon1">
+                        <input type="password" name="password" maxlength="200" class="form-control" placeholder="Password" required aria-describedby="sizing-addon1">
                     </div>
                     <br/>
                     <div class="col-sm-7 col-sm-offset-2">
@@ -48,7 +48,7 @@
 
                 <% } %>
             </div>
-            <a href="./register.jsp" style="text-align:Center;font-weight:bold;font-size:120%;padding: 0 2%">Register As Patient</a>
+            <a href="./register_patient.jsp" style="text-align:Center;font-weight:bold;font-size:120%;padding: 0 2%">Register As Patient</a>
         </div>
     </div>
 </div>
