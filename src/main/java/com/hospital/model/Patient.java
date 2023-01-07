@@ -1,17 +1,65 @@
 package com.hospital.model;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+@Entity
+@Table(name = "patients")
 public class Patient extends BaseEntity{
+
+    @Column
     private String name;
+
+    @Column
     private String email;
+
+    @Column
     private String address;
+
+    @Column
     private String phone;
+
+    @Column(name = "reason_of_visit", columnDefinition = "varchar(300) default 'Not Stated'")
     private String reasonOfVisit;
-    private String roomNo;
-    private String bedNo;
-    private String toBeReferredTo;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Room roomAdmitted;
+
+    @Transient
+    private Long roomId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Bed bedAdmitted;
+
+    @Transient
+    private Long bedId;
+
+    @Column(name = "referred_to", columnDefinition = "varchar(200) default 'Not Referred'")
+    private String referredTo;
+
+    @Column
     private String gender;
+
+    @Column(name = "admission_date")
+    @Temporal(TemporalType.DATE)
+    private Date admissionDate;
+
+    @Column
     private int age;
+
+    @Column(name = "blood_group")
     private String bloodGroup;
+
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    private List<Auth> auths = new ArrayList<Auth>();
+
+    @Transient
+    private String password;
+
+    @Transient
+    private String confirmPassword;
 
     public String getName() {
         return name;
@@ -53,28 +101,44 @@ public class Patient extends BaseEntity{
         this.reasonOfVisit = reasonOfVisit;
     }
 
-    public String getRoomNo() {
-        return roomNo;
+    public Long getRoomId() {
+        return roomId;
     }
 
-    public void setRoomNo(String roomNo) {
-        this.roomNo = roomNo;
+    public void setRoomId(Long roomId) {
+        this.roomId = roomId;
     }
 
-    public String getBedNo() {
-        return bedNo;
+    public Long getBedId() {
+        return bedId;
     }
 
-    public void setBedNo(String bedNo) {
-        this.bedNo = bedNo;
+    public void setBedId(Long bedId) {
+        this.bedId = bedId;
     }
 
-    public String getToBeReferredTo() {
-        return toBeReferredTo;
+    public Room getRoomAdmitted() {
+        return roomAdmitted;
     }
 
-    public void setToBeReferredTo(String toBeReferredTo) {
-        this.toBeReferredTo = toBeReferredTo;
+    public void setRoomAdmitted(Room roomAdmitted) {
+        this.roomAdmitted = roomAdmitted;
+    }
+
+    public Bed getBedAdmitted() {
+        return bedAdmitted;
+    }
+
+    public void setBedAdmitted(Bed bedAdmitted) {
+        this.bedAdmitted = bedAdmitted;
+    }
+
+    public String getReferredTo() {
+        return referredTo;
+    }
+
+    public void setReferredTo(String referredTo) {
+        this.referredTo = referredTo;
     }
 
     public String getGender() {
@@ -83,6 +147,14 @@ public class Patient extends BaseEntity{
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public Date getAdmissionDate() {
+        return admissionDate;
+    }
+
+    public void setAdmissionDate(Date admissionDate) {
+        this.admissionDate = admissionDate;
     }
 
     public int getAge() {
@@ -99,5 +171,34 @@ public class Patient extends BaseEntity{
 
     public void setBloodGroup(String bloodGroup) {
         this.bloodGroup = bloodGroup;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
+    public List<Auth> getAuths() {
+        return auths;
+    }
+
+    public void setAuths(List<Auth> auths) {
+        this.auths = auths;
+    }
+
+    public void addAuth(Auth auth){
+        auth.setPatient(this);
+        getAuths().add(auth);
     }
 }
