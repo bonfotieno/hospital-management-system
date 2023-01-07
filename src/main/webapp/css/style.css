@@ -112,6 +112,17 @@ body
 	display:none;
 }
 
+
+#addBedItem
+{
+	display:none;
+}
+
+#bedlist
+{
+	display:none;
+}
+
 .active
 {
 	background-color:#EEEEEE;
