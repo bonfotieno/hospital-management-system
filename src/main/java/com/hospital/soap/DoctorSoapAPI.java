@@ -4,10 +4,10 @@ import com.hospital.controllers.DoctorBeanI;
 import com.hospital.model.Doctor;
 
 import javax.ejb.EJB;
-//import javax.jws.WebService;
+import javax.jws.WebService;
 import java.util.List;
 
-//@WebService
+@WebService
 public class DoctorSoapAPI {
 
     @EJB

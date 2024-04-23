@@ -27,10 +27,12 @@ public class LoginAction extends HttpServlet {
     @EJB
     AuthBeanI authBean;
     ServletContext servletCtx = null;
+
     public void init(ServletConfig config) throws ServletException{
         super.init(config);
         servletCtx = config.getServletContext();
     }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
